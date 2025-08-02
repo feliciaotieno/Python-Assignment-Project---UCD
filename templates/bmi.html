@@ -1,18 +1,36 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h2> BMI Calculator</h2>
-  <form method="POST">
-    <label for="weight">Weight (kg):</label>
-    <input type="number" step="any" name="weight" required>
-
-    <label for="height">Height (m):</label>
-    <input type="number" step="any" name="height" required>
-
-    <button type="submit">Calculate BMI</button>
+<div class="card" style="max-width:420px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">BMI Calculator</h2>
+  <p class="subtle" style="margin-bottom:18px;">
+    Enter your weight (kg) and height (m) to check your Body Mass Index.
+  </p>
+  <form method="post" autocomplete="off" style="display:flex;gap:0.8em;">
+    <input type="number" name="weight" min="1" step="any" placeholder="Weight (kg)" required style="width:120px;">
+    <input type="number" name="height" min="0.1" step="any" placeholder="Height (m)" required style="width:120px;">
+    <button type="submit" style="flex-basis:100%;">Calculate</button>
   </form>
 
   {% if result %}
-    <p style="margin-top: 20px;"><strong>{{ result }}</strong></p>
+    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+      {{ result }}
+    </div>
   {% endif %}
+
+  {% if redirect_delay %}
+    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+      You will be redirected to the games page shortly...
+    </p>
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ url_for('games') }}";
+      }, {{ redirect_delay * 1000 }});
+    </script>
+  {% endif %}
+
+  <hr style="margin:22px 0;">
+  <p style="font-size:0.97em;color:#6f6fee;">
+    Check your BMI for fun or fitness!
+  </p>
+</div>
 {% endblock %}

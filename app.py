@@ -86,7 +86,9 @@ def games():
 def guess_number():
     import random
     message = ""
-    secret = 7  
+    secret = 7  # or randomize if you want
+    redirect_delay = None  # seconds
+
     if request.method == 'POST':
         game_stats["guess_attempts"] += 1
         try:
@@ -98,41 +100,45 @@ def guess_number():
             else:
                 message = "🎉 Correct! You guessed it!"
                 game_stats["guess_wins"] += 1
-        except:
+            redirect_delay = 5  # seconds to show result before redirecting
+        except Exception:
             message = "Please enter a valid number."
+            redirect_delay = 5
 
-    return render_template('guess_number.html', message=message)
+    return render_template('guess_number.html', message=message, redirect_delay=redirect_delay)
 
 # Lottery draw and match results
 @app.route('/games/lottery', methods=['GET', 'POST'])
 def lottery():
     import random
     result = ""
+    redirect_delay = None
     user_numbers = []
     drawn_numbers = random.sample(range(1, 50), 6)
 
     if request.method == 'POST':
         game_stats["lottery_plays"] += 1
         try:
-            # Get numbers from form inputs
             for i in range(6):
                 num = int(request.form.get(f'num{i+1}'))
                 if num < 1 or num > 49:
                     raise ValueError("Each number must be between 1 and 49.")
                 user_numbers.append(num)
-
             matches = set(user_numbers) & set(drawn_numbers)
             game_stats["lottery_matches"] += len(matches)
             result = f"🎉 You matched {len(matches)} numbers!<br>Winning numbers: {drawn_numbers}<br>Your numbers: {user_numbers}<br>Matched: {sorted(matches)}"
         except Exception as e:
             result = f"⚠️ Error: {str(e)}"
+        redirect_delay = 5
 
-    return render_template('lottery.html', result=result)
+    return render_template('lottery.html', result=result, redirect_delay=redirect_delay)
 
 # Palindrome check
 @app.route('/games/palindrome', methods=['GET', 'POST'])
 def palindrome():
     result = ""
+    redirect_delay = None
+
     if request.method == 'POST':
         game_stats["palindrome_checks"] += 1
         word = request.form.get('word', '').strip()
@@ -143,7 +149,9 @@ def palindrome():
             game_stats["palindrome_hits"] += 1
         else:
             result = f"❌ '{word}' is not a palindrome."
-    return render_template('palindrome.html', result=result)
+        redirect_delay = 5
+
+    return render_template('palindrome.html', result=result, redirect_delay=redirect_delay)
 
 # Helper function to calculate BMI and return category
 def calculate_bmi(weight, height):
@@ -166,24 +174,26 @@ def calculate_bmi(weight, height):
 
 @app.route('/games/bmi', methods=['GET', 'POST'])
 def bmi():
-        # BMI calculator.
     result = ""
+    redirect_delay = None
+
     if request.method == 'POST':
         try:
             weight = float(request.form.get('weight', '').strip())
             height = float(request.form.get('height', '').strip())
-
             bmi_value, category = calculate_bmi(weight, height)
             result = f"Your BMI is {bmi_value} ({category})"
         except Exception as e:
             result = f"⚠️ Error: {str(e)}"
+        redirect_delay = 5
 
-    return render_template('bmi.html', result=result)
+    return render_template('bmi.html', result=result, redirect_delay=redirect_delay)
 
 # Sudoku game
 @app.route('/games/sudoku', methods=['GET', 'POST'])
 def sudoku():
     result = ""
+    redirect_delay = None
     board = []
 
     if request.method == 'POST':
@@ -197,15 +207,15 @@ def sudoku():
                 if any(v < 1 or v > 9 for v in row_vals):
                     raise ValueError("Sudoku numbers must be between 1 and 9.")
                 board.append(row_vals)
-
             if is_valid_sudoku(board):
                 result = "✅ This is a valid Sudoku solution!"
             else:
                 result = "❌ This is NOT a valid Sudoku solution."
         except Exception as e:
             result = f"⚠️ Error: {str(e)}"
+        redirect_delay = 5
 
-    return render_template('sudoku.html', result=result)
+    return render_template('sudoku.html', result=result, redirect_delay=redirect_delay)
 
 def is_valid_sudoku(grid):
     def is_valid_group(group):

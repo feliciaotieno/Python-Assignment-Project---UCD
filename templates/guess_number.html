@@ -1,14 +1,35 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h2> Guess the Number</h2>
-  <form method="POST">
-    <label for="guess">Enter your guess (1-10):</label>
-    <input type="number" name="guess" id="guess" required>
+<div class="card" style="max-width:440px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">Guess the Number</h2>
+  <p class="subtle" style="margin-bottom:18px;">
+    I'm thinking of a number between <strong>1 and 10</strong>. Can you guess it?
+  </p>
+  <form method="post" autocomplete="off">
+    <input type="number" name="guess" min="1" max="10" placeholder="Your guess" required style="width:80px;text-align:center;">
     <button type="submit">Guess</button>
   </form>
-
+  
   {% if message %}
-    <p><strong>{{ message }}</strong></p>
+    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+      {{ message }}
+    </div>
   {% endif %}
+
+  {% if redirect_delay %}
+    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+      You will be redirected to the games page shortly...
+    </p>
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ url_for('games') }}";
+      }, {{ redirect_delay * 1000 }});
+    </script>
+  {% endif %}
+
+  <hr style="margin:22px 0;">
+  <p style="font-size:0.97em;color:#6f6fee;">
+    Every guess counts toward your game stats!
+  </p>
+</div>
 {% endblock %}

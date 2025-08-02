@@ -1,14 +1,35 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h2> Palindrome Checker</h2>
-  <form method="POST">
-    <label for="word">Enter a word or phrase:</label>
-    <input type="text" id="word" name="word" required>
+<div class="card" style="max-width:440px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">Palindrome Checker</h2>
+  <p class="subtle" style="margin-bottom:18px;">
+    Enter a word or phrase to see if it's a palindrome (reads the same backward).
+  </p>
+  <form method="post" autocomplete="off">
+    <input type="text" name="word" placeholder="Type here..." required style="width:220px;text-align:center;">
     <button type="submit">Check</button>
   </form>
 
   {% if result %}
-    <p style="margin-top: 20px;"><strong>{{ result }}</strong></p>
+    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+      {{ result }}
+    </div>
   {% endif %}
+
+  {% if redirect_delay %}
+    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+      You will be redirected to the games page shortly...
+    </p>
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ url_for('games') }}";
+      }, {{ redirect_delay * 1000 }});
+    </script>
+  {% endif %}
+
+  <hr style="margin:22px 0;">
+  <p style="font-size:0.97em;color:#6f6fee;">
+    Test any word – stats count palindromes you find!
+  </p>
+</div>
 {% endblock %}

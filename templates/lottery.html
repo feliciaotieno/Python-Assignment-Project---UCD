@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h2> Lottery Game</h2>
-  <p>Pick 6 numbers between 1 and 49:</p>
-
-  <form method="POST">
-    {% for i in range(6) %}
-      <input type="number" name="num{{ i+1 }}" min="1" max="49" required>
+<div class="card" style="max-width:520px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">Lottery Game</h2>
+  <p class="subtle" style="margin-bottom:18px;">
+    Pick 6 numbers between 1 and 49. See how many you match!
+  </p>
+  <form method="post" autocomplete="off" style="display:flex;gap:0.7em;flex-wrap:wrap;">
+    {% for i in range(1, 7) %}
+      <input type="number" name="num{{ i }}" min="1" max="49" required placeholder="{{ i }}" style="width:55px;text-align:center;">
     {% endfor %}
-    <button type="submit">Play</button>
+    <button type="submit" style="flex-basis:100%;margin-top:1em;">Play</button>
   </form>
 
   {% if result %}
-    <div style="margin-top: 20px;">
-      <strong>{{ result | safe }}</strong>
+    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+      {{ result|safe }}
     </div>
   {% endif %}
+
+  {% if redirect_delay %}
+    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+      You will be redirected to the games page shortly...
+    </p>
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ url_for('games') }}";
+      }, {{ redirect_delay * 1000 }});
+    </script>
+  {% endif %}
+
+  <hr style="margin:22px 0;">
+  <p style="font-size:0.97em;color:#6f6fee;">
+    All plays and matches are tracked in your stats!
+  </p>
+</div>
 {% endblock %}

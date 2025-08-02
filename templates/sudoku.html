@@ -1,18 +1,39 @@
 {% extends 'base.html' %}
-
 {% block content %}
-  <h2> Sudoku Validator</h2>
-  <p>Enter each row of the Sudoku solution, with 9 space-separated numbers:</p>
-
-  <form method="POST">
+<div class="card" style="max-width:680px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">Sudoku Checker</h2>
+  <p class="subtle" style="margin-bottom:18px;">
+    Enter each Sudoku row (9 numbers, space separated). Numbers must be 1–9.
+  </p>
+  <form method="post" autocomplete="off" style="display:flex;flex-direction:column;gap:0.5em;">
     {% for i in range(9) %}
-      <label for="row{{ i }}">Row {{ i+1 }}:</label>
-      <input type="text" name="row{{ i }}" placeholder="e.g. 5 3 4 6 7 8 9 1 2" required><br>
+      <input type="text" name="row{{ i }}" maxlength="17"
+             placeholder="Row {{ i + 1 }} (e.g. 5 3 4 6 7 8 9 1 2)" required
+             pattern="^([1-9]\s?){9}$" style="font-size:1.07em;">
     {% endfor %}
-    <button type="submit">Check Solution</button>
+    <button type="submit" style="margin-top:1em;">Check</button>
   </form>
 
   {% if result %}
-    <p style="margin-top: 20px;"><strong>{{ result }}</strong></p>
+    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+      {{ result }}
+    </div>
   {% endif %}
+
+  {% if redirect_delay %}
+    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+      You will be redirected to the games page shortly...
+    </p>
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ url_for('games') }}";
+      }, {{ redirect_delay * 1000 }});
+    </script>
+  {% endif %}
+
+  <hr style="margin:22px 0;">
+  <p style="font-size:0.97em;color:#6f6fee;">
+    Every time you check a Sudoku, it’s counted in your stats!
+  </p>
+</div>
 {% endblock %}
