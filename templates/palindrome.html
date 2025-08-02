@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card" style="max-width:440px;margin:3em auto 2em auto;">
-  <h2 style="color:#fff;">Palindrome Checker</h2>
-  <p class="subtle" style="margin-bottom:18px;">
-    Enter a word or phrase to see if it's a palindrome (reads the same backward).
+<div class="card palindrome-card">
+  <h2 class="card-title">Palindrome Checker</h2>
+  <p class="subtle palindrome-description">
+    Enter a word or phrase to check if it's a palindrome.
   </p>
-  <form method="post" autocomplete="off">
-    <input type="text" name="word" placeholder="Type here..." required style="width:220px;text-align:center;">
-    <button type="submit">Check</button>
+  <form method="post" autocomplete="off" class="palindrome-form">
+    <input type="text" name="word" required placeholder="Type your word or phrase">
+    <button type="submit" class="btn-primary">Check</button>
   </form>
 
   {% if result %}
-    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+    <div class="palindrome-result">
       {{ result }}
     </div>
   {% endif %}
 
   {% if redirect_delay %}
-    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+    <p class="palindrome-redirect-info">
       You will be redirected to the games page shortly...
     </p>
     <script>
@@ -27,9 +27,9 @@
     </script>
   {% endif %}
 
-  <hr style="margin:22px 0;">
-  <p style="font-size:0.97em;color:#6f6fee;">
-    Test any word – stats count palindromes you find!
+  <hr>
+  <p class="palindrome-note">
+    Every palindrome you find is added to your stats!
   </p>
 </div>
 {% endblock %}

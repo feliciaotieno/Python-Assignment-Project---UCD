@@ -1,116 +1,148 @@
-// Smooth scroll for anchor links
-document.addEventListener('DOMContentLoaded', () => {
-  const links = document.querySelectorAll('a[href^="#"]');
-  for (let link of links) {
-    link.addEventListener('click', function(e) {
+// --- Scroll to Top Button ---
+const scrollBtn = document.getElementById('scrollToTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 150) {
+    scrollBtn.style.display = 'block';
+  } else {
+    scrollBtn.style.display = 'none';
+  }
+});
+scrollBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// --- Auto-focus Skip Link when tabbing ---
+const skipLink = document.querySelector('.skip-link');
+if (skipLink) {
+  skipLink.addEventListener('focus', () => {
+    skipLink.style.left = '16px';
+    skipLink.style.top = '14px';
+    skipLink.style.width = 'auto';
+    skipLink.style.height = 'auto';
+  });
+  skipLink.addEventListener('blur', () => {
+    skipLink.style.left = '-999px';
+    skipLink.style.top = 'auto';
+    skipLink.style.width = '1px';
+    skipLink.style.height = '1px';
+  });
+}
+
+// --- Flash message: Auto-scroll & fade-out ---
+document.addEventListener('DOMContentLoaded', function() {
+  // Flash messages
+  const flash = document.querySelector('.flashes, .flash-success, .flash-error, .flash-info');
+  if (flash) {
+    flash.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      flash.style.transition = 'opacity 0.7s';
+      flash.style.opacity = '0';
+      setTimeout(() => { flash.style.display = 'none'; }, 800);
+    }, 4200);
+  }
+
+  // Toast notification
+  const toast = document.getElementById('toast');
+  if (toast && toast.textContent.trim()) {
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 3200);
+  }
+});
+
+// --- Modal popup for Reflection Tips (reflection.html) ---
+const openTips = document.getElementById('openTipsModal');
+const closeTips = document.getElementById('closeTipsModal');
+const tipsModal = document.getElementById('tipsModal');
+if (openTips && closeTips && tipsModal) {
+  openTips.addEventListener('click', () => {
+    tipsModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  });
+  closeTips.addEventListener('click', () => {
+    tipsModal.style.display = 'none';
+    document.body.style.overflow = '';
+  });
+  tipsModal.addEventListener('click', (e) => {
+    if (e.target === tipsModal) {
+      tipsModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+}
+
+// --- Fun Facts toggle (example for JS interactivity) ---
+const funFactsToggle = document.getElementById('funFactsToggle');
+const funFacts = document.getElementById('funFacts');
+if (funFactsToggle && funFacts) {
+  funFactsToggle.addEventListener('click', function() {
+    funFacts.classList.toggle('visible');
+    if (funFacts.classList.contains('visible')) {
+      funFacts.style.maxHeight = funFacts.scrollHeight + 'px';
+      funFactsToggle.textContent = 'Hide Fun Facts ▲';
+    } else {
+      funFacts.style.maxHeight = '0';
+      funFactsToggle.textContent = 'Show Fun Facts ▼';
+    }
+  });
+}
+
+// --- Contact Form: Real-time Validation and Animation ---
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    let valid = true;
+    const name = this.querySelector('[name="name"]');
+    const email = this.querySelector('[name="email"]');
+    const msg = this.querySelector('[name="message"]');
+
+    // Simple validation
+    [name, email, msg].forEach(field => field.classList.remove('invalid'));
+    if (!name.value.trim()) {
+      name.classList.add('invalid'); valid = false;
+    }
+    if (!email.value.match(/^.+@.+\..+$/)) {
+      email.classList.add('invalid'); valid = false;
+    }
+    if (!msg.value.trim()) {
+      msg.classList.add('invalid'); valid = false;
+    }
+    if (!valid) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
+      showToast('Please fill in all fields with valid information.', 'error');
+      return false;
+    }
+  });
+}
 
-  // Suggest-a-Game form logic
-  const suggestForm = document.getElementById('suggest-form');
-  if (suggestForm) {
-    suggestForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const val = this.suggestion.value.trim();
-      const feedback = document.getElementById('suggest-feedback');
-      if (val.length < 3) {
-        feedback.textContent = "Please enter a more detailed suggestion.";
-        feedback.style.display = 'block';
-        feedback.style.color = 'crimson';
-        this.suggestion.classList.add('invalid');
-        this.suggestion.focus();
-        return;
-      }
-      this.suggestion.classList.remove('invalid');
-      feedback.textContent = "";
-      showToast('Thanks for your suggestion: "' + val + '"!');
-      this.reset();
-    });
-  }
+// --- Toast notification helper (can be called from anywhere) ---
+function showToast(message, type = "success") {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.style.background = (type === "error") ? "#f44336" : "#4caf50";
+  toast.style.color = "#fff";
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 3500);
+}
 
-  // Fun Facts toggle logic
-  const factsToggle = document.getElementById('facts-toggle');
-  const factsList = document.getElementById('facts-list');
-  const arrow = document.getElementById('arrow');
-  if (factsToggle && factsList && arrow) {
-    factsToggle.addEventListener('click', function() {
-      if (factsList.style.display === 'none' || factsList.style.display === '') {
-        factsList.style.display = 'block';
-        arrow.textContent = '▲';
-      } else {
-        factsList.style.display = 'none';
-        arrow.textContent = '▼';
-      }
-    });
-  }
-
-  // Scoreboard sorting logic (if you have one)
-  const scoreboard = document.getElementById('scoreboard');
-  if (scoreboard) {
-    scoreboard.querySelectorAll('th').forEach((header, idx) => {
-      header.style.cursor = 'pointer';
-      header.title = 'Sort by this column';
-      header.addEventListener('click', function() {
-        const rows = Array.from(scoreboard.tBodies[0].rows);
-        const isNumber = idx > 0;
+// --- Optional: Table Sorting (e.g., scoreboard) ---
+document.addEventListener('DOMContentLoaded', function() {
+  const tables = document.querySelectorAll('table');
+  tables.forEach(function(table) {
+    const headers = table.querySelectorAll('th');
+    headers.forEach(function(th, colIdx) {
+      th.addEventListener('click', function() {
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const asc = th.classList.toggle('asc');
+        headers.forEach(h => h !== th && h.classList.remove('asc', 'desc'));
         rows.sort((a, b) => {
-          let v1 = a.cells[idx].textContent, v2 = b.cells[idx].textContent;
-          if (isNumber) { v1 = parseFloat(v1)||0; v2 = parseFloat(v2)||0; }
-          return v2 - v1;
+          let ta = a.children[colIdx].textContent.trim();
+          let tb = b.children[colIdx].textContent.trim();
+          let cmp = (!isNaN(ta) && !isNaN(tb)) ? ta - tb : ta.localeCompare(tb);
+          return asc ? cmp : -cmp;
         });
-        rows.forEach(r => scoreboard.tBodies[0].appendChild(r));
+        rows.forEach(r => table.querySelector('tbody').appendChild(r));
       });
     });
-  }
-});
-
-// Scroll-to-top button logic
-const scrollBtn = document.getElementById('scrollToTop');
-if (scrollBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 250) scrollBtn.style.display = 'block';
-    else scrollBtn.style.display = 'none';
   });
-  scrollBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-// Toast notification function
-function showToast(msg, color="#4caf50") {
-  const toast = document.getElementById('toast');
-  if (toast) {
-    toast.textContent = msg;
-    toast.style.background = color;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2800);
-  }
-}
-
-// Keyboard shortcuts (accessibility)
-document.addEventListener('keydown', function(e) {
-  if (e.altKey && !e.shiftKey) {
-    if (e.key.toLowerCase() === 'g') window.location.href = '/games';
-    if (e.key.toLowerCase() === 'r') window.location.href = '/reflect';
-    if (e.key.toLowerCase() === 's') window.location.href = '/stats';
-  }
-});
-
-// Debug: console message for stats page
-if (window.location.href.includes('stats')) {
-  console.log("Welcome to your stats dashboard!");
-}
-// Reflection Tips Modal
-document.addEventListener('DOMContentLoaded', function() {
-  const openModal = document.getElementById('openTipsModal');
-  const closeModal = document.getElementById('closeTipsModal');
-  const modal = document.getElementById('tipsModal');
-  if (openModal && closeModal && modal) {
-    openModal.onclick = () => { modal.style.display = 'flex'; };
-    closeModal.onclick = () => { modal.style.display = 'none'; };
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
-  }
 });

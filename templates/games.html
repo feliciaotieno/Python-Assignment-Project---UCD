@@ -1,81 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="main-games-layout">
-  <div class="games-main">
-    <h2>Game Hub</h2>
-    <p>Pick a challenge or scroll down for fun logic facts, your stats, and more.</p>
+  <section class="games-main">
+    <h2 class="card-title">Games Hub</h2>
     <div class="home-sections">
-      <div class="card">
+      <div class="card game-card">
         <h3>Guess the Number</h3>
-        <p>Try to guess the secret number. Too high or too low? Feedback will guide you.</p>
-        <a href="{{ url_for('guess_number') }}"><button>Play</button></a>
+        <p>Try to guess the secret number between 1 and 10.</p>
+        <a href="{{ url_for('guess_number') }}"><button class="btn-primary">Play</button></a>
       </div>
-      <div class="card">
-        <h3>Lottery Draw</h3>
-        <p>Pick 6 numbers and test your luck. Can you match the draw?</p>
-        <a href="{{ url_for('lottery') }}"><button>Play</button></a>
-      </div>
-      <div class="card">
+      <div class="card game-card">
         <h3>Palindrome Checker</h3>
-        <p>Enter a word or phrase and see if it reads the same backward.</p>
-        <a href="{{ url_for('palindrome') }}"><button>Check</button></a>
+        <p>See if a word or phrase is a palindrome.</p>
+        <a href="{{ url_for('palindrome') }}"><button class="btn-primary">Play</button></a>
       </div>
-      <div class="card">
+      <div class="card game-card">
+        <h3>Lottery Game</h3>
+        <p>Pick 6 numbers and try your luck!</p>
+        <a href="{{ url_for('lottery') }}"><button class="btn-primary">Play</button></a>
+      </div>
+      <div class="card game-card">
+        <h3>Sudoku Checker</h3>
+        <p>Enter a completed Sudoku grid and validate it.</p>
+        <a href="{{ url_for('sudoku') }}"><button class="btn-primary">Check</button></a>
+      </div>
+      <div class="card game-card">
         <h3>BMI Calculator</h3>
-        <p>Check your body mass index and health category.</p>
-        <a href="{{ url_for('bmi') }}"><button>Calculate</button></a>
-      </div>
-      <div class="card">
-        <h3>Sudoku Validator</h3>
-        <p>Paste a full Sudoku grid and check if it’s valid.</p>
-        <a href="{{ url_for('sudoku') }}"><button>Validate</button></a>
+        <p>Calculate your Body Mass Index easily.</p>
+        <a href="{{ url_for('bmi') }}"><button class="btn-primary">Calculate</button></a>
       </div>
     </div>
-    <hr style="margin: 40px 0 20px 0;">
-    <div class="extra-section" style="margin-bottom: 2em;">
-      <h3 class="section-light-title">Game Tips</h3>
-      <ul>
-        <li><b>Guess the Number:</b> Use a binary search approach — always halve your range.</li>
-        <li><b>Sudoku:</b> Every row, column, and box must have 1–9 exactly once. Start with the easiest numbers first.</li>
-        <li><b>Palindromes:</b> Famous palindromes: “madam”, “racecar”, “level”.</li>
-        <li><b>BMI:</b> Useful for basic health, but always consult a professional for real advice!</li>
-      </ul>
-    </div>
-    <div class="extra-section">
-      <h3 class="section-light-title">Game Stats</h3>
-      <ul>
-        <li>Total Guess Attempts: {{ game_stats.guess_attempts }}</li>
-        <li>Palindromes Found: {{ game_stats.palindrome_hits }}</li>
-        <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
-        <li>Sudoku Checked: {{ game_stats.sudoku_plays or 0 }}</li>
-      </ul>
-    </div>
-    <div class="extra-section">
-      <h3 class="fun-facts-callout" id="facts-toggle" style="cursor:pointer;">
-        Fun Facts <span id="arrow">▼</span>
-      </h3>
-      <ul id="facts-list" style="display:none;">
-        <li>Did you know Sudoku originated in 18th-century Switzerland?</li>
-        <li>Palindrome comes from Greek, meaning "running back again."</li>
-        <li>The highest recorded IQ is around 230.</li>
-        <li>Some lottery formats use prime numbers to increase randomness.</li>
-        <li>Brain teasers can improve short-term memory and processing speed!</li>
-      </ul>
-    </div>
-  </div>
-
+  </section>
   <aside class="games-sidebar">
-    <div class="extra-section">
-      <h3>Suggest a New Game</h3>
-      <form id="suggest-form">
-        <label for="suggestion">What game should we add next?</label><br>
-        <input type="text" id="suggestion" name="suggestion" placeholder="Your idea..." style="margin-bottom: 0.5em;">
-        <button type="submit">Submit</button>
-      </form>
-      <div id="suggest-feedback" style="display:none;color:#4f46e5;margin-top:10px;"></div>
+    <h4>Game Stats</h4>
+    <ul>
+      <li>Guess Attempts: {{ game_stats.guess_attempts }}</li>
+      <li>Correct Guesses: {{ game_stats.guess_wins }}</li>
+      <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
+      <li>Total Matches: {{ game_stats.lottery_matches }}</li>
+      <li>Palindrome Checks: {{ game_stats.palindrome_checks }}</li>
+      <li>Palindrome Hits: {{ game_stats.palindrome_hits }}</li>
+      <li>Sudoku Played: {{ game_stats.sudoku_plays or 0 }}</li>
+    </ul>
+    <div class="games-tip">
+      <strong>Tip:</strong> All your plays are tracked!
     </div>
   </aside>
 </div>
-
 {% endblock %}

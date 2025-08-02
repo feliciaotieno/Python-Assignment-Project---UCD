@@ -8,9 +8,8 @@
       <h4>Mood Breakdown</h4>
       <ul>
         {% for mood, count in mood_counts.items() %}
-          <li style="margin:0.2em 0;">
-            <span style="font-weight:600;color:{% if mood=='Happy' %}#4caf50{% elif mood=='Inspired' %}#ffc107{% elif mood=='Frustrated' %}#f44336{% elif mood=='Tired' %}#9c27b0{% else %}#2196f3{% endif %};">{{ mood }}</span>
-            – {{ count }}
+          <li>
+            <span class="mood-label mood-{{ mood|lower }}">{{ mood }}</span> – {{ count }}
           </li>
         {% endfor %}
       </ul>
@@ -18,7 +17,7 @@
     <div class="reflect-mini-card">
       <h4>Streak</h4>
       <p>
-        <span style="font-size:1.5em;font-weight:700;">{{ streak }}</span> day streak!
+        <span class="streak-count">{{ streak }}</span> day streak!
       </p>
     </div>
     <div class="reflect-mini-card">
@@ -33,48 +32,44 @@
 
   <!-- Main Content: Reflection Form, Prompts, and Recent -->
   <section class="reflection-content">
-    <!-- Flash messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
-        <ul class="flashes" style="list-style:none;padding:0;margin-bottom:16px;">
+        <ul class="flashes">
           {% for category, message in messages %}
-            <li class="flash-{{ category }}" style="background:#e0ffe0;border-left:5px solid #4caf50;padding:9px 16px;margin-bottom:7px;border-radius:6px;font-weight:500;color:#232942;">{{ message }}</li>
+            <li class="flash-{{ category }}">{{ message }}</li>
           {% endfor %}
         </ul>
       {% endif %}
     {% endwith %}
     {% if error %}
-      <div style="background:#fff5f5;border-left:5px solid #f44336;padding:9px 16px;margin-bottom:7px;border-radius:6px;font-weight:500;color:#d32f2f;">
-        {{ error }}
-      </div>
+      <div class="form-error">{{ error }}</div>
     {% endif %}
     <div class="reflection-card">
-      <h2> Reflect</h2>
-      <!-- Modal trigger button -->
-<button type="button" id="openTipsModal" class="btn-cyan" style="margin-bottom:12px;">Show Reflection Tips</button>
+      <h2 class="card-title">Reflect</h2>
+      <button type="button" id="openTipsModal" class="btn-cyan modal-trigger">Show Reflection Tips</button>
 
-<!-- Modal itself -->
-<div id="tipsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:999;background:rgba(0,0,0,0.27);justify-content:center;align-items:center;">
-  <div style="background:#fff;padding:2em 1.5em 1.2em 1.5em;border-radius:15px;max-width:320px;margin:auto;box-shadow:0 2px 24px rgba(80,80,140,0.17);position:relative;">
-    <button id="closeTipsModal" style="position:absolute;right:13px;top:10px;background:none;border:none;font-size:1.5em;color:#444;cursor:pointer;">×</button>
-    <h4 style="margin-top:0;color:#6366f1;">Reflection Tips</h4>
-    <ul style="color:#232942;margin:1em 0 0 0;">
-      <li>Reflect at the same time daily for best results.</li>
-      <li>Try to write at least one sentence—even on tough days!</li>
-      <li>Look back at your progress every week.</li>
-      <li>Focus on how you feel, not just what happened.</li>
-    </ul>
-  </div>
-</div>
+      <!-- Modal -->
+      <div id="tipsModal" class="modal">
+        <div class="modal-content">
+          <button id="closeTipsModal" class="modal-close">&times;</button>
+          <h4>Reflection Tips</h4>
+          <ul>
+            <li>Reflect at the same time daily for best results.</li>
+            <li>Try to write at least one sentence—even on tough days!</li>
+            <li>Look back at your progress every week.</li>
+            <li>Focus on how you feel, not just what happened.</li>
+          </ul>
+        </div>
+      </div>
 
       {% if session.get('name') %}
         <p class="subtle">Welcome back, <strong>{{ session.get('name') }}</strong>! Take a moment to log your thoughts.</p>
       {% else %}
         <p class="subtle">How are you feeling after your session?</p>
       {% endif %}
-      <form method="POST" autocomplete="off" aria-label="Reflection Form">
-        <div class="row" style="display:flex;gap:1em;flex-wrap:wrap;">
-          <div style="flex:1;">
+      <form method="POST" autocomplete="off" aria-label="Reflection Form" class="reflection-form">
+        <div class="row two-cols">
+          <div>
             <label for="mood">Mood:</label>
             <select name="mood" required>
               <option value="">--Select--</option>
@@ -85,7 +80,7 @@
               <option value="Tired">😴 Tired</option>
             </select>
           </div>
-          <div style="flex:1;">
+          <div>
             <label for="tag">Tag:</label>
             <select name="tag">
               <option value="general">General</option>
@@ -98,9 +93,9 @@
         </div>
         <label for="notes">Reflection:</label>
         <textarea name="notes" rows="4" placeholder="What did you learn? What stood out?" required></textarea>
-        <button type="submit" class="btn-green" style="margin-top:10px;">Submit Reflection</button>
+        <button type="submit" class="btn-green">Submit Reflection</button>
       </form>
-      <div class="reflection-tips">
+      <div class="reflection-tips inspiration-list">
         <strong>Need Inspiration?</strong>
         <ul id="prompt-list">
           <li>What’s something you accomplished today?</li>
@@ -108,14 +103,14 @@
           <li>What’s one thing you’re grateful for right now?</li>
           <li>Describe a moment that made you smile recently.</li>
         </ul>
-        <small class="subtle" style="color:#6366f1;">Tip: Entries stay private and help you see your growth!</small>
+        <small class="subtle tip-note">Tip: Entries stay private and help you see your growth!</small>
       </div>
-      <p style="color:#6366f1;font-style:italic;text-align:center;margin-top:1em;">“The unexamined life is not worth living.” — Socrates</p>
+      <p class="quote-socrates">“The unexamined life is not worth living.” — Socrates</p>
     </div>
     {% if latest_reflection %}
     <div class="last-reflection-card highlight">
       <h4>Last Reflection</h4>
-      <p style="font-size:0.98em;"><em>{{ latest_reflection.timestamp }}</em> – <strong>{{ latest_reflection.mood }}</strong> [{{ latest_reflection.tag }}]</p>
+      <p><em>{{ latest_reflection.timestamp }}</em> – <strong>{{ latest_reflection.mood }}</strong> [{{ latest_reflection.tag }}]</p>
       <blockquote>“{{ latest_reflection.notes[:100] }}{% if latest_reflection.notes|length > 100 %}...{% endif %}”</blockquote>
     </div>
     {% endif %}
@@ -125,9 +120,7 @@
       <ul>
         {% for entry in reflections[-4:-1] %}
           <li>
-            <span style="font-weight:600;color:{% if entry.mood=='Happy' %}#4caf50{% elif entry.mood=='Inspired' %}#ffc107{% elif entry.mood=='Frustrated' %}#f44336{% elif entry.mood=='Tired' %}#9c27b0{% else %}#2196f3{% endif %};">
-              {{ entry.mood }}
-            </span>
+            <span class="mood-label mood-{{ entry.mood|lower }}">{{ entry.mood }}</span>
             <em>({{ entry.timestamp }})</em> - {{ entry.notes[:65] }}{% if entry.notes|length > 65 %}...{% endif %}
           </li>
         {% endfor %}

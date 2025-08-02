@@ -1,186 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="contact-layout" style="display:flex;gap:2.2em;align-items:flex-start;justify-content:center;flex-wrap:wrap;">
-
-  <!-- ASIDE: Extra Content -->
-  <aside class="contact-aside" style="flex:1 1 230px;max-width:260px;min-width:210px;background:#212848;border-radius:18px;box-shadow:0 1px 10px #0af1; color:#e5eaff;padding:1.5em 1.2em;margin-bottom:2em;">
-    <div style="display:flex;align-items:center;gap:0.7em;margin-bottom:1.1em;">
-      <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge Icon" style="width:42px;height:42px;border-radius:11px;">
-      <span style="font-weight:700;color:#5DE6FC;font-size:1.13em;">Why MindForge?</span>
-    </div>
-    <p style="margin:0 0 0.7em 0;">A creative hub to train your mind, track your moods, and reflect on progress—all in one friendly app!</p>
-    <div class="fun-fact animated-fact" style="background:#242c57;border-left:5px solid #5DE6FC;border-radius:8px;padding:0.7em 0.9em;margin-bottom:0.7em;font-size:0.96em;">
-      <strong>Did you know?</strong><br>
-      Regular mental games can improve focus and memory. Even 5 minutes a day makes a difference!
-    </div>
-    <div style="margin-top:1.3em;">
-      <strong>Quick Links:</strong>
-      <ul style="margin-left:0.8em;margin-top:0.2em;padding-left:0;">
-        <li><a href="{{ url_for('home') }}" style="color:#00eaff;">🏠 Home</a></li>
-        <li><a href="{{ url_for('stats') }}" style="color:#00eaff;">📊 Stats</a></li>
-        <li><a href="{{ url_for('reflect') }}" style="color:#00eaff;">🪞 Reflect</a></li>
-        <li><a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener" style="color:#00eaff;">🧠 Brain Training (Wiki)</a></li>
-      </ul>
-    </div>
-    <div style="margin-top:1.2em;">
-      <span style="font-size:0.97em;color:#7df2ce;">Support Hours: Mon-Fri 10am-5pm</span>
+<div class="contact-layout">
+  <aside class="contact-aside">
+    <h3>Let's Connect</h3>
+    <ul>
+      <li>Email: <a href="mailto:your@email.com">your@email.com</a></li>
+      <li>Find more at <a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener">Brain Training (Wikipedia)</a></li>
+    </ul>
+    <div class="contact-fun-fact">
+      <strong>Did You Know?</strong>
+      <p>Regular brain training may help sharpen memory, focus, and reasoning skills. Make reflection a daily habit!</p>
     </div>
   </aside>
-
-  <!-- MAIN CARD: The contact page content -->
-  <div style="flex:2 1 400px;min-width:320px;">
-    <div class="card" style="max-width:600px;margin:0 auto 2em auto;">
-      <h2 style="color:#fff;">Contact MindForge</h2>
-      <div style="display:flex;align-items:center;gap:1.4em;flex-wrap:wrap;margin-bottom:10px;">
-        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge Logo" style="width:70px;height:70px;border-radius:12px;box-shadow:0 1px 6px #0002;">
-        <div>
-          <p style="color:#e5eaff;margin:0 0 0.25em 0;">
-            <strong>We love feedback!</strong> Please reach out with questions, suggestions, or a friendly hello.
-          </p>
-          <p style="color:#e5eaff;margin:0;">
-            <strong>Email:</strong> <a href="mailto:your@email.com" style="color:#4fbbff;">your@email.com</a><br>
-            <strong>Phone:</strong> <a href="tel:0123456789" style="color:#4fbbff;">01234 567 890</a>
-          </p>
-        </div>
-      </div>
-      <hr style="margin:26px 0 18px 0;">
-
-      <div style="background:#232942;border-radius:14px;padding:1.3em 1em 1.2em 1em;margin-bottom:1.6em;">
-        <blockquote style="color:#85f6ff;font-size:1.05em;font-style:italic;">
-          “The mind is not a vessel to be filled, but a fire to be kindled.”
-          <br><span style="color:#8cf5b3;font-size:0.99em;">– Plutarch</span>
-        </blockquote>
-      </div>
-
-      <!-- Flash messages -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          <div id="flash-messages" style="margin-bottom:1em;">
-            {% for category, message in messages %}
-              <div class="flash-{{ category }}" style="background:#43b67a;color:#fff;border-radius:9px;padding:0.8em 1em;margin-bottom:6px;">
-                {{ message }}
-              </div>
-            {% endfor %}
-          </div>
-          <script>
-            // Auto-scroll to flash message (with a little delay for smoothness)
-            setTimeout(function() {
-              var msg = document.getElementById('flash-messages');
-              if (msg) { msg.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
-            }, 100);
-          </script>
-        {% endif %}
-      {% endwith %}
-
-      <!-- Contact form -->
-      <form id="contactForm" method="POST" autocomplete="off" style="display:flex;flex-direction:column;gap:10px;">
-        <label for="name" style="color:#e5eaff;">Name:</label>
-        <input type="text" id="name" name="name" required placeholder="Your Name">
-
-        <label for="email" style="color:#e5eaff;">Email:</label>
-        <input type="email" id="email" name="email" required placeholder="you@example.com">
-
-        <label for="message" style="color:#e5eaff;">Message:</label>
-        <textarea id="message" name="message" rows="4" required placeholder="Type your message..."></textarea>
-        
-        <button type="submit" class="btn-cyan pulse-on-hover" style="margin-top:10px;">Send Message</button>
-      </form>
-
-      <!-- FAQ Section -->
-      <div class="extra-section" style="margin-top:2.1em;background:#222b44;">
-        <h4 style="color:#5DE6FC;">Frequently Asked Questions</h4>
-        <ul style="color:#e5eaff;">
-          <li><strong>Can I use MindForge on my phone?</strong> Yes! The site is fully responsive and works on all devices.</li>
-          <li><strong>Are my reflections private?</strong> All data stays local and secure—your privacy is important.</li>
-          <li><strong>How can I suggest a new feature?</strong> Use this contact form, or email us directly!</li>
+  <section class="contact-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for category, message in messages %}
+            <li class="flash-{{ category }}">{{ message }}</li>
+          {% endfor %}
         </ul>
-      </div>
-
-      <!-- Map/Media Example -->
-      <div class="extra-section" style="margin-top:1.7em;background:#222b44;">
-        <h4 style="color:#5DE6FC;">Visit Us</h4>
-        <div style="margin-bottom:0.5em;">
-          <iframe title="location map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1357,51.4975,-0.1281,51.5030&amp;layer=mapnik" style="width:99%;height:120px;border-radius:10px;border:1px solid #444;"></iframe>
-        </div>
-        <p style="color:#e5eaff;font-size:0.96em;">(Example Map) MindForge HQ, London, UK</p>
-      </div>
-
-      <hr style="margin:32px 0 18px 0;">
-
-      <p style="font-size:0.97em;color:#6f6fee;">
-        Want to learn more about brain training? <a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener" style="color:#00bfff;">Visit Wikipedia</a>
-      </p>
+      {% endif %}
+    {% endwith %}
+    <h2 class="card-title">Contact Us</h2>
+    <form method="post" autocomplete="off" class="contact-form" aria-label="Contact Form">
+      <label for="name">Name:</label>
+      <input type="text" name="name" maxlength="50" required>
+      <label for="email">Email:</label>
+      <input type="email" name="email" maxlength="80" required>
+      <label for="message">Message:</label>
+      <textarea name="message" rows="4" maxlength="500" required></textarea>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+    <div class="contact-quote">
+      <p>“Communication is the bridge between confusion and clarity.”</p>
     </div>
-  </div>
+  </section>
 </div>
-
-<!-- Responsive CSS (add to your main CSS, or here for local override) -->
-<style>
-  @media (max-width: 950px) {
-    .contact-layout { flex-direction: column; gap:1.2em; }
-    .contact-aside { max-width: 99vw; margin-bottom: 0.5em; }
-  }
-  /* Flash message animation */
-  .flash-success, .flash-danger {
-    animation: slideFadeIn 0.7s cubic-bezier(.6,1.55,.57,.94);
-    box-shadow: 0 4px 16px #4caf5033;
-    position: relative;
-    left: 0;
-    opacity: 1;
-  }
-  @keyframes slideFadeIn {
-    from { left:-36px; opacity:0; }
-    to { left:0; opacity:1; }
-  }
-  /* Fun fact animation */
-  .animated-fact {
-    animation: popIn 0.7s cubic-bezier(.36,2.01,.23,.99) both;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.87) translateY(22px); opacity:0; }
-    to { transform: scale(1) translateY(0); opacity:1; }
-  }
-  /* Pulse button on hover */
-  .pulse-on-hover:hover {
-    animation: pulse 0.7s cubic-bezier(.39,1.69,.33,.87);
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 #5DE6FC44;}
-    70% { box-shadow: 0 0 0 10px #5DE6FC00;}
-    100% { box-shadow: 0 0 0 0 #5DE6FC00;}
-  }
-  /* Real-time validation shake */
-  input.invalid, textarea.invalid { border-color: #f44336 !important; background: #fff6f6 !important; }
-  @keyframes shake { 0% { transform:translateX(0);} 22%{transform:translateX(-7px);} 44%{transform:translateX(7px);} 66%{transform:translateX(-5px);} 88%{transform:translateX(5px);} 100%{transform:translateX(0);} }
-  .shake { animation: shake 0.4s; }
-</style>
-
-<!-- JS for real-time validation and subtle shake animation -->
-<script>
-  // Add 'invalid' class and a shake effect if validation fails
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    var valid = true;
-    ['name', 'email', 'message'].forEach(function(id) {
-      var input = document.getElementById(id);
-      if (!input.value.trim() || (id === 'email' && !/^\S+@\S+\.\S+$/.test(input.value))) {
-        input.classList.add('invalid');
-        input.classList.add('shake');
-        valid = false;
-        setTimeout(function() { input.classList.remove('shake'); }, 400);
-      } else {
-        input.classList.remove('invalid');
-      }
-    });
-    if (!valid) {
-      e.preventDefault();
-    }
-  });
-
-  // Remove invalid highlight on input
-  ['name', 'email', 'message'].forEach(function(id) {
-    document.getElementById(id).addEventListener('input', function() {
-      this.classList.remove('invalid');
-    });
-  });
-</script>
 {% endblock %}

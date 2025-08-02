@@ -2,7 +2,6 @@
 {% block content %}
 
 <div class="stats-layout">
-  <!-- Sidebar -->
   <aside class="stats-sidebar">
     <form method="get" action="{{ url_for('stats') }}" class="sidebar-filter">
       <label for="mood">Mood:</label>
@@ -21,8 +20,8 @@
       </select>
       <label for="search">Keyword:</label>
       <input type="text" name="search" value="{{ request.args.get('search', '') }}">
-      <button type="submit">🔍 Filter</button>
-      <a href="{{ url_for('stats') }}"><button type="button">Reset</button></a>
+      <button type="submit" class="btn-primary">🔍 Filter</button>
+      <a href="{{ url_for('stats') }}"><button type="button" class="btn-secondary">Reset</button></a>
     </form>
 
     <div class="sidebar-breakdowns">
@@ -34,7 +33,7 @@
           {% endfor %}
         </ul>
       {% endif %}
-      <h4 style="margin-top:1.5em;">Tag Breakdown</h4>
+      <h4>Tag Breakdown</h4>
       {% if tag_counts %}
         <ul>
           {% for tag, count in tag_counts.items() %}
@@ -43,19 +42,18 @@
         </ul>
       {% endif %}
     </div>
-    <p style="margin-top:2em;">
+    <p class="export-link">
       <a href="{{ url_for('export_reflections') }}">
-        <button style="width:100%;">📁 Download Reflections</button>
+        <button class="btn-primary">📁 Download Reflections</button>
       </a>
     </p>
   </aside>
 
-  <!-- Main Content --> 
   <section class="stats-main">
-    <h2>📊 Reflection Stats</h2>
+    <h2 class="card-title">📊 Reflection Stats</h2>
     <p><strong>Total Reflections:</strong> {{ total }}</p>
     {% if request.args %}
-      <p><em>Filtered results:</em> Showing {{ reflections|length }} matching reflection{{ reflections|length != 1 and 's' or '' }}.</p>
+      <p class="filtered-note"><em>Filtered results:</em> Showing {{ reflections|length }} matching reflection{{ reflections|length != 1 and 's' or '' }}.</p>
     {% endif %}
 
     <div class="stats-row">
@@ -149,7 +147,7 @@
 
     <h3>Reflection Log {% if request.args %}(Filtered){% endif %}</h3>
     {% if reflections %}
-      <ul>
+      <ul class="reflection-log-list">
         {% for entry in reflections %}
           <li>
             <strong>{{ entry.timestamp }}</strong> – <em>{{ entry.mood }}</em> [{{ entry.tag }}]<br>

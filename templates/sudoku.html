@@ -1,27 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card" style="max-width:680px;margin:3em auto 2em auto;">
-  <h2 style="color:#fff;">Sudoku Checker</h2>
-  <p class="subtle" style="margin-bottom:18px;">
+<div class="card sudoku-card">
+  <h2 class="card-title">Sudoku Checker</h2>
+  <p class="subtle sudoku-description">
     Enter each Sudoku row (9 numbers, space separated). Numbers must be 1–9.
   </p>
-  <form method="post" autocomplete="off" style="display:flex;flex-direction:column;gap:0.5em;">
+  <form method="post" autocomplete="off" class="sudoku-form">
     {% for i in range(9) %}
       <input type="text" name="row{{ i }}" maxlength="17"
              placeholder="Row {{ i + 1 }} (e.g. 5 3 4 6 7 8 9 1 2)" required
-             pattern="^([1-9]\s?){9}$" style="font-size:1.07em;">
+             pattern="^([1-9]\s?){9}$">
     {% endfor %}
-    <button type="submit" style="margin-top:1em;">Check</button>
+    <button type="submit" class="btn-primary">Check</button>
   </form>
 
   {% if result %}
-    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+    <div class="sudoku-result">
       {{ result }}
     </div>
   {% endif %}
 
   {% if redirect_delay %}
-    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+    <p class="sudoku-redirect-info">
       You will be redirected to the games page shortly...
     </p>
     <script>
@@ -31,8 +31,8 @@
     </script>
   {% endif %}
 
-  <hr style="margin:22px 0;">
-  <p style="font-size:0.97em;color:#6f6fee;">
+  <hr>
+  <p class="sudoku-note">
     Every time you check a Sudoku, it’s counted in your stats!
   </p>
 </div>

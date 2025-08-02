@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="card" style="max-width:440px;margin:3em auto 2em auto;">
-  <h2 style="color:#fff;">Guess the Number</h2>
-  <p class="subtle" style="margin-bottom:18px;">
-    I'm thinking of a number between <strong>1 and 10</strong>. Can you guess it?
+<div class="card guess-card">
+  <h2 class="card-title">Guess the Number</h2>
+  <p class="subtle guess-description">
+    Guess a number between 1 and 10. Can you find the secret number?
   </p>
-  <form method="post" autocomplete="off">
-    <input type="number" name="guess" min="1" max="10" placeholder="Your guess" required style="width:80px;text-align:center;">
-    <button type="submit">Guess</button>
+  <form method="post" autocomplete="off" class="guess-form">
+    <input type="number" name="guess" min="1" max="10" required placeholder="Enter your guess">
+    <button type="submit" class="btn-primary">Guess</button>
   </form>
-  
+
   {% if message %}
-    <div style="margin-top:18px;font-weight:600;font-size:1.13em;color:#fff;">
+    <div class="guess-result">
       {{ message }}
     </div>
   {% endif %}
 
   {% if redirect_delay %}
-    <p style="margin-top:12px;color:#ccc;font-size:1.07em;">
+    <p class="guess-redirect-info">
       You will be redirected to the games page shortly...
     </p>
     <script>
@@ -27,9 +27,9 @@
     </script>
   {% endif %}
 
-  <hr style="margin:22px 0;">
-  <p style="font-size:0.97em;color:#6f6fee;">
-    Every guess counts toward your game stats!
+  <hr>
+  <p class="guess-note">
+    Try to guess with as few attempts as possible!
   </p>
 </div>
 {% endblock %}

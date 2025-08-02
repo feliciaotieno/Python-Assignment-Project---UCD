@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Welcome to MindForge</h2>
-  <p class="lead">Your digital space for logic games, reflection, and mind growth.</p>
+  <h2 class="card-title home-title">Welcome to MindForge</h2>
+  <p class="lead home-lead">Your digital space for logic games, reflection, and mind growth.</p>
   <div class="home-intro">
     <h3>About This App</h3>
     <p>
@@ -10,8 +10,8 @@
     </p>
   </div>
 
-  <div class="home-summary-cards" style="display: flex; flex-wrap: wrap; gap: 2em;">
-    <div class="card">
+  <div class="home-summary-cards">
+    <div class="card summary-card">
       <h4>Your Quick Stats</h4>
       <ul>
         <li><strong>Total Reflections:</strong> {{ total_reflections }}</li>
@@ -19,27 +19,27 @@
         <li><strong>Most Common Mood:</strong> {{ common_mood }}</li>
       </ul>
     </div>
-    <div class="card">
+    <div class="card summary-card">
       <h4>Today’s Motivation</h4>
-      <blockquote style="font-style: italic;">{{ quote }}</blockquote>
+      <blockquote class="motivation-quote">{{ quote }}</blockquote>
     </div>
     {% if latest_reflection %}
-    <div class="card">
+    <div class="card summary-card">
       <h4>Latest Reflection</h4>
       <p><strong>{{ latest_reflection.timestamp }}</strong></p>
-      <p style="font-size: 0.95em;">“{{ latest_reflection.notes[:120] }}{% if latest_reflection.notes|length > 120 %}...{% endif %}”</p>
+      <p>“{{ latest_reflection.notes[:120] }}{% if latest_reflection.notes|length > 120 %}...{% endif %}”</p>
       <p><em>Mood:</em> {{ latest_reflection.mood }} | <em>Tag:</em> {{ latest_reflection.tag }}</p>
-      <a href="{{ url_for('reflect') }}"><button>Write New Reflection</button></a>
+      <a href="{{ url_for('reflect') }}"><button class="btn-primary">Write New Reflection</button></a>
     </div>
     {% endif %}
   </div>
 
-  <section class="video-responsive" style="margin-top:2em">
+  <section class="video-responsive home-video">
     <h3>Watch: Why Logic Games Are Good For Your Brain</h3>
     <iframe src="https://www.youtube.com/embed/4QKNArEAwEk" title="Do Brain Games Really Improve Your Brain?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </section>
 
-  <div style="margin-top: 30px;">
+  <div class="home-benefits">
     <h4>Why Use MindForge?</h4>
     <ul>
       <li>Sharpen your thinking with games designed to test logic and memory</li>
@@ -50,10 +50,10 @@
   </div>
   <hr>
   {% if session.get('name') %}
-    <p style="margin-top: 20px;"> Welcome back, <strong>{{ session.get('name') }}</strong>!
+    <p class="home-user"> Welcome back, <strong>{{ session.get('name') }}</strong>!
       <a href="{{ url_for('logout') }}">(Not you?)</a>
     </p>
   {% else %}
-    <p style="margin-top: 20px;"><a href="{{ url_for('set_name') }}">Set your name</a> to personalize your experience.</p>
+    <p class="home-user"><a href="{{ url_for('set_name') }}">Set your name</a> to personalize your experience.</p>
   {% endif %}
 {% endblock %}
