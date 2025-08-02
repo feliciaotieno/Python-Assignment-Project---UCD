@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MindForge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="background-fade"></div>
+  <header>
+    <div class="site-banner">
+      <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge Banner" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 12px;">
+      <h1>MindForge</h1>
+    </div>
+    <nav aria-label="Main navigation">
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('games') }}">Games</a>
+      <a href="{{ url_for('reflect') }}">Reflect</a>
+      <a href="{{ url_for('stats') }}">Stats</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <button id="scrollToTop" style="display:none;position:fixed;right:32px;bottom:32px;z-index:99;background:#6366f1;color:#fff;border:none;padding:12px 18px;border-radius:24px;box-shadow:0 2px 10px rgba(0,0,0,0.07);font-size:1.2em;cursor:pointer;">↑</button>
+  <div id="toast" style="display:none;position:fixed;left:50%;bottom:40px;transform:translateX(-50%);padding:14px 28px;background:#4caf50;color:#fff;font-weight:500;border-radius:30px;z-index:999;box-shadow:0 2px 10px rgba(0,0,0,0.09);"></div>
+</body>
+</html>

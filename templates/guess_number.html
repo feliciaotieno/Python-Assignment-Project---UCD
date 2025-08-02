@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2> Guess the Number</h2>
+  <form method="POST">
+    <label for="guess">Enter your guess (1-10):</label>
+    <input type="number" name="guess" id="guess" required>
+    <button type="submit">Guess</button>
+  </form>
+
+  {% if message %}
+    <p><strong>{{ message }}</strong></p>
+  {% endif %}
+{% endblock %}

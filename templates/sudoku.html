@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2> Sudoku Validator</h2>
+  <p>Enter each row of the Sudoku solution, with 9 space-separated numbers:</p>
+
+  <form method="POST">
+    {% for i in range(9) %}
+      <label for="row{{ i }}">Row {{ i+1 }}:</label>
+      <input type="text" name="row{{ i }}" placeholder="e.g. 5 3 4 6 7 8 9 1 2" required><br>
+    {% endfor %}
+    <button type="submit">Check Solution</button>
+  </form>
+
+  {% if result %}
+    <p style="margin-top: 20px;"><strong>{{ result }}</strong></p>
+  {% endif %}
+{% endblock %}

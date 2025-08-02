@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2> Reflect</h2>
+  <p>How are you feeling after your session?</p>
+  <form method="POST">
+    <label for="mood">Mood:</label>
+    <select name="mood" required>
+      <option value="">--Select--</option>
+      <option value="Happy">😄 Happy</option>
+      <option value="Neutral">😐 Neutral</option>
+      <option value="Frustrated">😖 Frustrated</option>
+      <option value="Inspired">🌟 Inspired</option>
+      <option value="Tired">😴 Tired</option>
+    </select>
+
+    <label for="tag">Tag:</label>
+    <select name="tag">
+      <option value="general">General</option>
+      <option value="study">Study</option>
+      <option value="health">Health</option>
+      <option value="fun">Fun</option>
+      <option value="life">Life</option>
+    </select>
+
+    <label for="notes">Reflection:</label>
+    <textarea name="notes" rows="4" placeholder="What did you learn? What stood out?" required></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}

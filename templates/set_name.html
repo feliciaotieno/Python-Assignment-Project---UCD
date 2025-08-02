@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Set Your Name</h2>
+  <form method="POST">
+    <label for="name">Enter your name:</label>
+    <input type="text" name="name" required>
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

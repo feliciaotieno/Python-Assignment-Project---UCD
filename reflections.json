@@ -1,0 +1,42 @@
+[
+  {
+    "mood": "Happy",
+    "notes": "Working",
+    "timestamp": "2025-07-29 12:43"
+  },
+  {
+    "mood": "Frustrated",
+    "notes": "Lies, lalallaalallalala\r\n",
+    "timestamp": "2025-07-29 12:44"
+  },
+  {
+    "mood": "Inspired",
+    "tag": "fun",
+    "notes": "I want to read more, I have decided to aim for 2 books a month",
+    "timestamp": "2025-07-31 12:17"
+  },
+  {
+    "mood": "Tired",
+    "tag": "study",
+    "notes": "My mind is exhausted, studying for 8 hours without breaks",
+    "timestamp": "2025-07-31 12:18"
+  },
+  {
+    "mood": "Happy",
+    "tag": "fun",
+    "notes": "Testing Happy and fun",
+    "timestamp": "2025-07-31 12:21"
+  },
+  {
+    "mood": "Frustrated",
+    "notes": "This is taking too long!",
+    "tag": "life",
+    "timestamp": "2025-08-01 15:01"
+  },
+  {
+    "mood": "Neutral",
+    "notes": "Not too bad these Ordinary Differential Equations",
+    "tag": "study",
+    "timestamp": "2025-08-01 15:02"
+  }
+]

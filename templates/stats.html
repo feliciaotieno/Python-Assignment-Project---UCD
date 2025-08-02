@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="stats-layout">
+  <!-- Sidebar -->
+  <aside class="stats-sidebar">
+    <form method="get" action="{{ url_for('stats') }}" class="sidebar-filter">
+      <label for="mood">Mood:</label>
+      <select name="mood">
+        <option value="">-- All --</option>
+        {% for mood in mood_counts %}
+          <option value="{{ mood }}" {% if request.args.get('mood') == mood %}selected{% endif %}>{{ mood }}</option>
+        {% endfor %}
+      </select>
+      <label for="tag">Tag:</label>
+      <select name="tag">
+        <option value="">-- All --</option>
+        {% for tag in tag_counts %}
+          <option value="{{ tag }}" {% if request.args.get('tag') == tag %}selected{% endif %}>{{ tag }}</option>
+        {% endfor %}
+      </select>
+      <label for="search">Keyword:</label>
+      <input type="text" name="search" value="{{ request.args.get('search', '') }}">
+      <button type="submit">🔍 Filter</button>
+      <a href="{{ url_for('stats') }}"><button type="button">Reset</button></a>
+    </form>
+
+    <div class="sidebar-breakdowns">
+      <h4>Mood Breakdown</h4>
+      {% if mood_counts %}
+        <ul>
+          {% for mood, count in mood_counts.items() %}
+            <li><strong>{{ mood }}</strong>: {{ count }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <h4 style="margin-top:1.5em;">Tag Breakdown</h4>
+      {% if tag_counts %}
+        <ul>
+          {% for tag, count in tag_counts.items() %}
+            <li><strong>{{ tag }}</strong>: {{ count }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <p style="margin-top:2em;">
+      <a href="{{ url_for('export_reflections') }}">
+        <button style="width:100%;">📁 Download Reflections</button>
+      </a>
+    </p>
+  </aside>
+
+  <!-- Main Content --> 
+  <section class="stats-main">
+    <h2>📊 Reflection Stats</h2>
+    <p><strong>Total Reflections:</strong> {{ total }}</p>
+    {% if request.args %}
+      <p><em>Filtered results:</em> Showing {{ reflections|length }} matching reflection{{ reflections|length != 1 and 's' or '' }}.</p>
+    {% endif %}
+
+    <div class="stats-row">
+      <div class="scoreboard-wrap">
+        <h3>Game Scoreboard</h3>
+        <table id="scoreboard">
+          <thead>
+            <tr>
+              <th>Game</th>
+              <th>Times Played</th>
+              <th>Best Score</th>
+              <th>Last Played</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Guess the Number</td>
+              <td>{{ game_stats.guess_attempts }}</td>
+              <td>{% if game_stats.guess_wins %}{{ game_stats.guess_wins }} correct{% else %}—{% endif %}</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Palindrome</td>
+              <td>{{ game_stats.palindrome_checks }}</td>
+              <td>{{ game_stats.palindrome_hits }}</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Lottery</td>
+              <td>{{ game_stats.lottery_plays }}</td>
+              <td>{{ game_stats.lottery_matches }} matches</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>Sudoku</td>
+              <td>{% if game_stats.sudoku_plays %}{{ game_stats.sudoku_plays }}{% else %}—{% endif %}</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>BMI Calculator</td>
+              <td>—</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stats-chart">
+        <canvas id="moodChart" width="430" height="340"></canvas>
+        <script>
+          const moodData = {
+            labels: {{ mood_counts.keys()|list|tojson }},
+            datasets: [{
+              label: 'Mood Frequency',
+              data: {{ mood_counts.values()|list|tojson }},
+              backgroundColor: [
+                "#12B5E5", "#3E3EF6", "#6B46C1", "#07C1AC", "#7267EF", "#5AC8FA"
+              ],
+              borderWidth: 0
+            }]
+          };
+          const config = {
+            type: 'pie',
+            data: moodData,
+            options: {
+              responsive: false,
+              plugins: { legend: { position: 'bottom' } }
+            }
+          };
+          new Chart(document.getElementById('moodChart'), config);
+        </script>
+      </div>
+    </div>
+
+    {% if latest %}
+      <h3>Most Recent Entry</h3>
+      <p><strong>{{ latest.timestamp }}</strong> – <em>{{ latest.mood }}</em></p>
+      <p>{{ latest.notes }}</p>
+    {% endif %}
+
+    <h3>Game Stats</h3>
+    <ul>
+      <li>Guess Attempts: {{ game_stats.guess_attempts }}</li>
+      <li>Correct Guesses: {{ game_stats.guess_wins }}</li>
+      <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
+      <li>Total Matches in Lottery: {{ game_stats.lottery_matches }}</li>
+      <li>Palindrome Checks: {{ game_stats.palindrome_checks }}</li>
+      <li>Palindrome Hits: {{ game_stats.palindrome_hits }}</li>
+    </ul>
+
+    <h3>Reflection Log {% if request.args %}(Filtered){% endif %}</h3>
+    {% if reflections %}
+      <ul>
+        {% for entry in reflections %}
+          <li>
+            <strong>{{ entry.timestamp }}</strong> – <em>{{ entry.mood }}</em> [{{ entry.tag }}]<br>
+            {{ entry.notes }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No reflections logged yet.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

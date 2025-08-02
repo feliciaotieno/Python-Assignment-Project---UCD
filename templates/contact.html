@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2> Contact Us</h2>
+<p>Have feedback or questions? Send us a message below.</p>
+
+<form method="post" style="max-width: 500px;">
+  <label for="name">Your Name:</label>
+  <input type="text" name="name" id="name" required>
+
+  <label for="email">Your Email:</label>
+  <input type="email" name="email" id="email" required>
+
+  <label for="message">Message:</label>
+  <textarea name="message" id="message" rows="5" required></textarea>
+
+  <button type="submit">Send Message</button>
+</form>
+
+<div class="contact-alt" style="margin-top: 32px;">
+  <p>
+    <strong>Prefer direct email?</strong><br>
+    <a href="mailto:support@mindforge.app">support@mindforge.app</a> or
+    <a href="mailto:info@mindforge.app">info@mindforge.app</a>
+  </p>
+
+  <p>
+    <strong>Learn more:</strong><br>
+    <a href="https://en.wikipedia.org/wiki/Logic_puzzle" target="_blank" rel="noopener">
+      Wikipedia: Logic Puzzle
+    </a>
+  </p>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2> Lottery Game</h2>
+  <p>Pick 6 numbers between 1 and 49:</p>
+
+  <form method="POST">
+    {% for i in range(6) %}
+      <input type="number" name="num{{ i+1 }}" min="1" max="49" required>
+    {% endfor %}
+    <button type="submit">Play</button>
+  </form>
+
+  {% if result %}
+    <div style="margin-top: 20px;">
+      <strong>{{ result | safe }}</strong>
+    </div>
+  {% endif %}
+{% endblock %}
