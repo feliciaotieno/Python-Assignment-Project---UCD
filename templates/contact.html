@@ -1,36 +1,112 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="card" style="max-width:600px;margin:3em auto 2em auto;">
+  <h2 style="color:#fff;">Contact MindForge</h2>
+  <div style="display:flex;align-items:center;gap:1.4em;flex-wrap:wrap;margin-bottom:10px;">
+    <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge Logo" style="width:70px;height:70px;border-radius:12px;box-shadow:0 1px 6px #0002;">
+    <div>
+      <p style="color:#e5eaff;margin:0 0 0.25em 0;">
+        <strong>We love feedback!</strong> Please reach out with questions, suggestions, or a friendly hello.
+      </p>
+      <p style="color:#e5eaff;margin:0;">
+        <strong>Email:</strong> <a href="mailto:your@email.com" style="color:#4fbbff;">your@email.com</a><br>
+        <strong>Phone:</strong> <a href="tel:0123456789" style="color:#4fbbff;">01234 567 890</a>
+      </p>
+    </div>
+  </div>
+  <hr style="margin:26px 0 18px 0;">
 
-<h2> Contact Us</h2>
-<p>Have feedback or questions? Send us a message below.</p>
+  <div style="background:#232942;border-radius:14px;padding:1.3em 1em 1.2em 1em;margin-bottom:1.6em;">
+    <blockquote style="color:#85f6ff;font-size:1.05em;font-style:italic;">
+      “The mind is not a vessel to be filled, but a fire to be kindled.”
+      <br><span style="color:#8cf5b3;font-size:0.99em;">– Plutarch</span>
+    </blockquote>
+  </div>
 
-<form method="post" style="max-width: 500px;">
-  <label for="name">Your Name:</label>
-  <input type="text" name="name" id="name" required>
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div style="margin-bottom:1em;">
+        {% for category, message in messages %}
+          <div class="flash-{{ category }}" style="background:#43b67a;color:#fff;border-radius:9px;padding:0.8em 1em;margin-bottom:6px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
-  <label for="email">Your Email:</label>
-  <input type="email" name="email" id="email" required>
+  <!-- Contact form -->
+  <form id="contactForm" method="POST" autocomplete="off" style="display:flex;flex-direction:column;gap:10px;">
+    <label for="name" style="color:#e5eaff;">Name:</label>
+    <input type="text" id="name" name="name" required placeholder="Your Name">
 
-  <label for="message">Message:</label>
-  <textarea name="message" id="message" rows="5" required></textarea>
+    <label for="email" style="color:#e5eaff;">Email:</label>
+    <input type="email" id="email" name="email" required placeholder="you@example.com">
 
-  <button type="submit">Send Message</button>
-</form>
+    <label for="message" style="color:#e5eaff;">Message:</label>
+    <textarea id="message" name="message" rows="4" required placeholder="Type your message..."></textarea>
+    
+    <button type="submit" class="btn-cyan" style="margin-top:10px;">Send Message</button>
+  </form>
 
-<div class="contact-alt" style="margin-top: 32px;">
-  <p>
-    <strong>Prefer direct email?</strong><br>
-    <a href="mailto:support@mindforge.app">support@mindforge.app</a> or
-    <a href="mailto:info@mindforge.app">info@mindforge.app</a>
-  </p>
+  <!-- FAQ Section -->
+  <div class="extra-section" style="margin-top:2.1em;background:#222b44;">
+    <h4 style="color:#5DE6FC;">Frequently Asked Questions</h4>
+    <ul style="color:#e5eaff;">
+      <li><strong>Can I use MindForge on my phone?</strong> Yes! The site is fully responsive and works on all devices.</li>
+      <li><strong>Are my reflections private?</strong> All data stays local and secure—your privacy is important.</li>
+      <li><strong>How can I suggest a new feature?</strong> Use this contact form, or email us directly!</li>
+    </ul>
+  </div>
 
-  <p>
-    <strong>Learn more:</strong><br>
-    <a href="https://en.wikipedia.org/wiki/Logic_puzzle" target="_blank" rel="noopener">
-      Wikipedia: Logic Puzzle
-    </a>
+  <!-- Map/Media Example -->
+  <div class="extra-section" style="margin-top:1.7em;background:#222b44;">
+    <h4 style="color:#5DE6FC;">Visit Us</h4>
+    <div style="margin-bottom:0.5em;">
+      <iframe title="location map" src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1357,51.4975,-0.1281,51.5030&amp;layer=mapnik" style="width:99%;height:120px;border-radius:10px;border:1px solid #444;"></iframe>
+    </div>
+    <p style="color:#e5eaff;font-size:0.96em;">(Example Map) MindForge HQ, London, UK</p>
+  </div>
+
+  <hr style="margin:32px 0 18px 0;">
+
+  <p style="font-size:0.97em;color:#6f6fee;">
+    Want to learn more about brain training? <a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener" style="color:#00bfff;">Visit Wikipedia</a>
   </p>
 </div>
 
-{% endblock %}
+<!-- JS for real-time validation and subtle shake animation -->
+<script>
+  // Add 'invalid' class and a shake effect if validation fails
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    var valid = true;
+    ['name', 'email', 'message'].forEach(function(id) {
+      var input = document.getElementById(id);
+      if (!input.value.trim() || (id === 'email' && !/^\S+@\S+\.\S+$/.test(input.value))) {
+        input.classList.add('invalid');
+        input.classList.add('shake');
+        valid = false;
+        setTimeout(function() { input.classList.remove('shake'); }, 400);
+      } else {
+        input.classList.remove('invalid');
+      }
+    });
+    if (!valid) {
+      e.preventDefault();
+    }
+  });
 
+  // Remove invalid highlight on input
+  ['name', 'email', 'message'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', function() {
+      this.classList.remove('invalid');
+    });
+  });
+</script>
+<style>
+  input.invalid, textarea.invalid { border-color: #f44336 !important; background: #fff6f6 !important; }
+  @keyframes shake { 0% { transform:translateX(0);} 22%{transform:translateX(-7px);} 44%{transform:translateX(7px);} 66%{transform:translateX(-5px);} 88%{transform:translateX(5px);} 100%{transform:translateX(0);} }
+  .shake { animation: shake 0.4s; }
+</style>
+{% endblock %}

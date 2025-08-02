@@ -11,7 +11,7 @@ Features:
 - Clean code structure and full route handling
 """
 
-from flask import Flask, render_template, request, redirect, url_for, make_response, session
+from flask import Flask, render_template, request, redirect, url_for, make_response, session, flash
 import json
 import os
 from datetime import datetime
@@ -378,11 +378,35 @@ def export_reflections():
     return response
 
 # Contact page
+
+CONTACTS_FILE = "contacts.json"
+
+def save_contact(data):
+    if os.path.exists(CONTACTS_FILE):
+        with open(CONTACTS_FILE, "r", encoding="utf-8") as f:
+            contacts = json.load(f)
+    else:
+        contacts = []
+    contacts.append(data)
+    with open(CONTACTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(contacts, f, indent=2, ensure_ascii=False)
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        # Handle contact form logic
-        return redirect(url_for('home'))
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip()
+        message = request.form.get('message', '').strip()
+        if not name or not email or not message:
+            flash("All fields are required.", "danger")
+        else:
+            save_contact({
+                "name": name,
+                "email": email,
+                "message": message
+            })
+            flash("Thank you for contacting us! We'll get back to you soon.", "success")
+            return redirect(url_for('contact'))
     return render_template('contact.html')
 
 if __name__ == '__main__':
