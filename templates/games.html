@@ -3,7 +3,7 @@
 
 <div class="main-games-layout">
   <div class="games-main">
-    <h2> Game Hub</h2>
+    <h2>Game Hub</h2>
     <p>Pick a challenge or scroll down for fun logic facts, your stats, and more.</p>
     <div class="home-sections">
       <div class="card">
@@ -34,7 +34,7 @@
     </div>
     <hr style="margin: 40px 0 20px 0;">
     <div class="extra-section" style="margin-bottom: 2em;">
-      <h3 class="section-light-title">Game Tips & Fun Facts</h3>
+      <h3 class="section-light-title">Game Tips</h3>
       <ul>
         <li><b>Guess the Number:</b> Use a binary search approach — always halve your range.</li>
         <li><b>Sudoku:</b> Every row, column, and box must have 1–9 exactly once. Start with the easiest numbers first.</li>
@@ -43,7 +43,7 @@
       </ul>
     </div>
     <div class="extra-section">
-      <h3 class="section-light-title">Game Tips & Fun Facts</h3>
+      <h3 class="section-light-title">Game Stats</h3>
       <ul>
         <li>Total Guess Attempts: {{ game_stats.guess_attempts }}</li>
         <li>Palindromes Found: {{ game_stats.palindrome_hits }}</li>
@@ -51,16 +51,18 @@
         <li>Sudoku Checked: {{ game_stats.sudoku_plays or 0 }}</li>
       </ul>
     </div>
-<div class="extra-section">
-  <h3 class="fun-facts-callout" id="facts-toggle" style="cursor:pointer;">
-    Fun Facts <span id="arrow">▼</span>
-  </h3>
-  <ul id="facts-list" style="display:none;">
-    <li>Did you know Sudoku originated in 18th-century Switzerland?</li>
-    <li>Palindrome comes from Greek, meaning "running back again."</li>
-    <li>The highest recorded IQ is around 230.</li>
-  </ul>
-</div>
+    <div class="extra-section">
+      <h3 class="fun-facts-callout" id="facts-toggle" style="cursor:pointer;">
+        Fun Facts <span id="arrow">▼</span>
+      </h3>
+      <ul id="facts-list" style="display:none;">
+        <li>Did you know Sudoku originated in 18th-century Switzerland?</li>
+        <li>Palindrome comes from Greek, meaning "running back again."</li>
+        <li>The highest recorded IQ is around 230.</li>
+        <li>Some lottery formats use prime numbers to increase randomness.</li>
+        <li>Brain teasers can improve short-term memory and processing speed!</li>
+      </ul>
+    </div>
   </div>
 
   <aside class="games-sidebar">
@@ -73,7 +75,6 @@
       </form>
       <div id="suggest-feedback" style="display:none;color:#4f46e5;margin-top:10px;"></div>
     </div>
-    
   </aside>
 </div>
 
