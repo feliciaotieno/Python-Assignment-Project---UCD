@@ -5,7 +5,8 @@ import os
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'super_secret_key'  # Change for production
+import os
+app.secret_key = os.environ.get('SECRET_KEY', 'dev')  # fallback for local dev
 
 REFLECTION_FILE = "reflections.json"
 
