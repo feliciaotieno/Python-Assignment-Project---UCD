@@ -1,4 +1,4 @@
-/* Smooth scroll for anchor links */
+// Smooth scroll for anchor links
 document.addEventListener('DOMContentLoaded', () => {
   const links = document.querySelectorAll('a[href^="#"]');
   for (let link of links) {
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Suggest-a-Game form logic (interactive/DOM/validation/toast) */
+  // Suggest-a-Game form logic
   const suggestForm = document.getElementById('suggest-form');
   if (suggestForm) {
     suggestForm.addEventListener('submit', function(e) {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Expand/collapse Fun Facts section */
+  // Fun Facts toggle logic
   const factsToggle = document.getElementById('facts-toggle');
   const factsList = document.getElementById('facts-list');
   const arrow = document.getElementById('arrow');
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Dynamic Scoreboard Sorting (click table headers to sort) */
+  // Scoreboard sorting logic (if you have one)
   const scoreboard = document.getElementById('scoreboard');
   if (scoreboard) {
     scoreboard.querySelectorAll('th').forEach((header, idx) => {
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* Scroll-to-top button logic */
+// Scroll-to-top button logic
 const scrollBtn = document.getElementById('scrollToTop');
 if (scrollBtn) {
   window.addEventListener('scroll', () => {
@@ -79,7 +79,7 @@ if (scrollBtn) {
   });
 }
 
-/* Toast notification function */
+// Toast notification function
 function showToast(msg, color="#4caf50") {
   const toast = document.getElementById('toast');
   if (toast) {
@@ -90,7 +90,7 @@ function showToast(msg, color="#4caf50") {
   }
 }
 
-/* Keyboard shortcuts (accessibility) */
+// Keyboard shortcuts (accessibility)
 document.addEventListener('keydown', function(e) {
   if (e.altKey && !e.shiftKey) {
     if (e.key.toLowerCase() === 'g') window.location.href = '/games';
@@ -99,66 +99,7 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* Debug: console message for stats page */ 
+// Debug: console message for stats page
 if (window.location.href.includes('stats')) {
   console.log("Welcome to your stats dashboard!");
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-  /* Suggest form JS  */
-  const suggestForm = document.getElementById('suggest-form');
-  if (suggestForm) {
-    suggestForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const val = this.suggestion.value.trim();
-      const feedback = document.getElementById('suggest-feedback');
-      if (val.length < 3) {
-        feedback.textContent = "Please enter a more detailed suggestion.";
-        feedback.style.display = 'block';
-        feedback.style.color = 'crimson';
-        return;
-      }
-      feedback.textContent = "Thanks for your suggestion: \"" + val + "\"!";
-      feedback.style.display = 'block';
-      feedback.style.color = '#4f46e5';
-      this.reset();
-    });
-  }
-
-  /* Collapsible Fun Facts */
-  const factsToggle = document.getElementById('facts-toggle');
-  const factsList = document.getElementById('facts-list');
-  const arrow = document.getElementById('arrow');
-  if (factsToggle && factsList && arrow) {
-    factsToggle.addEventListener('click', function() {
-      const isOpen = factsList.style.display === 'block';
-      factsList.style.display = isOpen ? 'none' : 'block';
-      arrow.textContent = isOpen ? '▼' : '▲';
-    });
-  }
-});
-
-.fun-facts-callout {
-  display: inline-block;
-  background: #6366f1;
-  color: #fff;
-  font-weight: 700;
-  padding: 14px 30px 14px 24px;
-  border-radius: 13px;
-  margin-bottom: 1em;
-  position: relative;
-  font-size: 1.25em;
-  box-shadow: 0 2px 10px rgba(99,102,241,0.11);
-}
-/* Fun facts */
-.fun-facts-callout::after {
-  content: '';
-  position: absolute;
-  left: 36px; 
-  bottom: -14px;
-  width: 0; height: 0;
-  border-left: 17px solid transparent;
-  border-right: 17px solid transparent;
-  border-top: 16px solid #6366f1;
-}
-
