@@ -10,9 +10,15 @@ MindForge provides users with a collection of classic logic games and a private 
 
 ---
 
-repo:
-  github_url: https://github.com/feliciaotieno/Python-Assignment-Project---UCD.git
-  render_url: https://python-assignment-project-ucd.onrender.com
+## Project URLs
+
+GitHub Repo:  
+https://github.com/feliciaotieno/Python-Assignment-Project---UCD
+
+Live Demo (Render):  
+https://python-assignment-project-ucd.onrender.com
+
+---
 
 ## Features
 
