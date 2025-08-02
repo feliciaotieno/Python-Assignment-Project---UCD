@@ -103,3 +103,14 @@ document.addEventListener('keydown', function(e) {
 if (window.location.href.includes('stats')) {
   console.log("Welcome to your stats dashboard!");
 }
+// Reflection Tips Modal
+document.addEventListener('DOMContentLoaded', function() {
+  const openModal = document.getElementById('openTipsModal');
+  const closeModal = document.getElementById('closeTipsModal');
+  const modal = document.getElementById('tipsModal');
+  if (openModal && closeModal && modal) {
+    openModal.onclick = () => { modal.style.display = 'flex'; };
+    closeModal.onclick = () => { modal.style.display = 'none'; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+  }
+});

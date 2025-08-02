@@ -50,6 +50,23 @@
     {% endif %}
     <div class="reflection-card">
       <h2> Reflect</h2>
+      <!-- Modal trigger button -->
+<button type="button" id="openTipsModal" class="btn-cyan" style="margin-bottom:12px;">Show Reflection Tips</button>
+
+<!-- Modal itself -->
+<div id="tipsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:999;background:rgba(0,0,0,0.27);justify-content:center;align-items:center;">
+  <div style="background:#fff;padding:2em 1.5em 1.2em 1.5em;border-radius:15px;max-width:320px;margin:auto;box-shadow:0 2px 24px rgba(80,80,140,0.17);position:relative;">
+    <button id="closeTipsModal" style="position:absolute;right:13px;top:10px;background:none;border:none;font-size:1.5em;color:#444;cursor:pointer;">×</button>
+    <h4 style="margin-top:0;color:#6366f1;">Reflection Tips</h4>
+    <ul style="color:#232942;margin:1em 0 0 0;">
+      <li>Reflect at the same time daily for best results.</li>
+      <li>Try to write at least one sentence—even on tough days!</li>
+      <li>Look back at your progress every week.</li>
+      <li>Focus on how you feel, not just what happened.</li>
+    </ul>
+  </div>
+</div>
+
       {% if session.get('name') %}
         <p class="subtle">Welcome back, <strong>{{ session.get('name') }}</strong>! Take a moment to log your thoughts.</p>
       {% else %}

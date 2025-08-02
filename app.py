@@ -289,7 +289,7 @@ def reflect():
     # Latest reflection
     latest_reflection = reflections[-1] if reflections else None
 
-    # Streak calculation (consecutive same-date entries)
+    # Streak calculation 
     streak = 1
     if len(reflections) > 1:
         streak = 1
@@ -320,13 +320,6 @@ def stats():
     selected_tag = request.args.get('tag')
     keyword = request.args.get('search', '').lower()
 
-    print("FILTER DEBUG ====")
-    print("Selected mood:", selected_mood)
-    print("Selected tag:", selected_tag)
-    print("Keyword:", keyword)
-    print("Before filtering:", len(reflections))
-
-    # Apply filters
     filtered = reflections
     if selected_mood:
         filtered = [r for r in filtered if r['mood'].lower() == selected_mood.lower()]
@@ -335,7 +328,20 @@ def stats():
     if keyword:
         filtered = [r for r in filtered if keyword in r['notes'].lower()]
 
-    print("After filtering:", len(filtered))
+    # Mood trend chart data
+    from collections import defaultdict
+    mood_trend = {"days": [], "data": {}}
+    if reflections:
+        day_mood = defaultdict(lambda: defaultdict(int))
+        for entry in reflections:
+            day = entry['timestamp'][:10]
+            day_mood[day][entry['mood']] += 1
+        sorted_days = sorted(day_mood.keys())
+        all_moods = sorted({m for v in day_mood.values() for m in v})
+        mood_trend = {
+            "days": sorted_days,
+            "data": {mood: [day_mood[day].get(mood, 0) for day in sorted_days] for mood in all_moods}
+        }
 
     return render_template(
         'stats.html',
@@ -345,6 +351,7 @@ def stats():
         tag_counts=tag_counts,
         latest=latest,
         game_stats=game_stats,
+        mood_trend=mood_trend,
     )
 
 # Export reflections.json for download
