@@ -376,4 +376,99 @@ button:hover { background: #473fe6; }
   padding: 1.4em 1.2em;
 }
 
+.reflection-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em 0;
+}
+.reflection-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 14px rgba(99,102,241,0.07);
+  padding: 2.5em 2.1em 2.3em 2.1em;
+  max-width: 520px;
+  width: 100%;
+}
+.reflection-tips {
+  margin: 1.8em 0 0.6em 0;
+  background: #f4f8fd;
+  border-left: 5px solid #5DE6FC;
+  border-radius: 10px;
+  padding: 1em 1em 0.5em 1.1em;
+  font-size: 0.96em;
+}
+.last-reflection-card {
+  margin-top: 1.3em;
+  padding: 1em 1em 0.7em 1em;
+  background: #f6f6ff;
+  border-radius: 10px;
+  border-left: 5px solid #6366f1;
+}
+.subtle { color: #667; opacity: 0.93; font-size: 1.01em; }
+.btn-cyan {
+  background: #5DE6FC !important;
+  color: #1b2436 !important;
+  font-weight: 600;
+}
+.btn-cyan:hover { background: #24cdfa !important; color: #161f2d !important; }
+
+.reflect-dashboard {
+  display: flex;
+  gap: 2.4em;
+  align-items: flex-start;
+  margin: 2em 0 1.5em 0;
+}
+.reflect-sidebar {
+  flex: 1 1 220px;
+  min-width: 200px;
+  max-width: 280px;
+  background: #f5f7fb;
+  border-radius: 16px;
+  box-shadow: 0 2px 14px rgba(76,175,80,0.06);
+  padding: 1.5em 1em 2.2em 1em;
+}
+.reflect-mini-card {
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 1.1em;
+  padding: 0.9em 1em;
+  box-shadow: 0 1px 7px rgba(76,175,80,0.09);
+}
+.mood-breakdown ul {
+  margin: 0.7em 0 0.4em 0.4em;
+  padding: 0;
+  list-style: none;
+}
+.reflection-content {
+  flex: 3 1 0;
+  min-width: 0;
+}
+.btn-green {
+  background: #4caf50 !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+.btn-green:hover { background: #319d37 !important; }
+.recent-reflections-list {
+  background: #f8fafc;
+  border-radius: 10px;
+  margin-top: 1.5em;
+  padding: 1em 1.5em;
+  font-size: 0.99em;
+}
+@media (max-width: 900px) {
+  .reflect-dashboard {
+    flex-direction: column;
+    gap: 1.1em;
+  }
+  .reflect-sidebar {
+    max-width: 100%;
+    position: static;
+    margin-bottom: 2em;
+  }
+}
+
+
+
 

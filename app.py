@@ -243,27 +243,70 @@ def logout():
     session.pop('name', None)
     return redirect(url_for('home'))
 
+from flask import render_template, request, redirect, url_for, session, flash
+from collections import Counter
+import datetime
+import json
+import os
+
+def load_reflections():
+    if os.path.exists("reflections.json"):
+        with open("reflections.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+def save_reflections(reflections):
+    with open("reflections.json", "w", encoding="utf-8") as f:
+        json.dump(reflections, f, indent=2, ensure_ascii=False)
+
 @app.route('/reflect', methods=['GET', 'POST'])
 def reflect():
-    if request.method == 'POST':
-        mood = request.form.get('mood')
-        notes = request.form.get('notes')
-        tag = request.form.get('tag', 'general')  # Properly indented
+    reflections = load_reflections()
+    error = None
 
-        entry = {
-            'mood': mood,
-            'notes': notes,
-            'tag': tag,
-            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")
-        }
-        reflections.append(entry)
+    # POST: Add a new reflection
+    if request.method == "POST":
+        mood = request.form.get("mood")
+        tag = request.form.get("tag")
+        notes = request.form.get("notes")
+        if not mood or not notes:
+            error = "Mood and Reflection are required."
+        else:
+            new_entry = {
+                "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "mood": mood,
+                "tag": tag or "general",
+                "notes": notes.strip()
+            }
+            reflections.append(new_entry)
+            save_reflections(reflections)
+            flash("Reflection submitted!", "success")
+            return redirect(url_for('reflect'))
 
-        with open(REFLECTION_FILE, "w") as f:
-            json.dump(reflections, f, indent=2)
+    # Calculate mood_counts
+    mood_counts = Counter(entry['mood'] for entry in reflections) if reflections else {}
 
-        return redirect(url_for('stats'))
+    # Latest reflection
+    latest_reflection = reflections[-1] if reflections else None
 
-    return render_template('reflection.html') 
+    # Streak calculation (consecutive same-date entries)
+    streak = 1
+    if len(reflections) > 1:
+        streak = 1
+        for i in range(1, len(reflections)):
+            if reflections[-i]['timestamp'][:10] == reflections[-i-1]['timestamp'][:10]:
+                streak += 1
+            else:
+                break
+
+    return render_template(
+        'reflection.html',
+        mood_counts=mood_counts,
+        reflections=reflections,
+        latest_reflection=latest_reflection,
+        streak=streak,
+        error=error
+    )
 
 # Stats page - mood counts, recent entry, chart
 @app.route('/stats')
