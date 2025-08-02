@@ -10,6 +10,10 @@ MindForge provides users with a collection of classic logic games and a private 
 
 ---
 
+repo:
+  github_url: https://github.com/feliciaotieno/Python-Assignment-Project---UCD.git
+  render_url: https://python-assignment-project-ucd.onrender.com
+
 ## Features
 
 - **Games:**  
@@ -76,7 +80,7 @@ MindForge provides users with a collection of classic logic games and a private 
 ## Deployment Notes
 
 - Deployable on [Render.com](https://render.com/) with Python environment and Gunicorn.  
-- Ensure all dependencies are listed in `requirements.txt` and set `web: gunicorn app:app` in your `Procfile` if needed.
+- All dependencies are listed in `requirements.txt` and set `web: gunicorn app:app` in `Procfile` needed.
 - Data files (`reflections.json`, `game_stats.json`) are stored locally for the demo.
 
 ---
