@@ -38,7 +38,8 @@ game_stats = {
     "lottery_plays": 0,
     "lottery_matches": 0,
     "palindrome_checks": 0,
-    "palindrome_hits": 0
+    "palindrome_hits": 0,
+    "sudoku_plays": 0
 }
 
 # Home page #
@@ -186,12 +187,15 @@ def sudoku():
     board = []
 
     if request.method == 'POST':
+        game_stats["sudoku_plays"] += 1
         try:
             for i in range(9):
                 row = request.form.get(f'row{i}', '').strip()
                 row_vals = list(map(int, row.split()))
                 if len(row_vals) != 9:
                     raise ValueError("Each row must have exactly 9 integers.")
+                if any(v < 1 or v > 9 for v in row_vals):
+                    raise ValueError("Sudoku numbers must be between 1 and 9.")
                 board.append(row_vals)
 
             if is_valid_sudoku(board):
