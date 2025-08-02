@@ -70,21 +70,62 @@ if (openTips && closeTips && tipsModal) {
   });
 }
 
-// --- Fun Facts toggle (example for JS interactivity) ---
-const funFactsToggle = document.getElementById('funFactsToggle');
-const funFacts = document.getElementById('funFacts');
-if (funFactsToggle && funFacts) {
-  funFactsToggle.addEventListener('click', function() {
-    funFacts.classList.toggle('visible');
-    if (funFacts.classList.contains('visible')) {
-      funFacts.style.maxHeight = funFacts.scrollHeight + 'px';
-      funFactsToggle.textContent = 'Hide Fun Facts ▲';
-    } else {
-      funFacts.style.maxHeight = '0';
-      funFactsToggle.textContent = 'Show Fun Facts ▼';
-    }
+// --- Fun Fact (Games page) ---
+document.addEventListener('DOMContentLoaded', function () {
+  // Fun facts array (customize these)
+  const funFacts = [
+    "Did you know? Playing logic games improves memory!",
+    "Brain teasers boost your problem-solving skills.",
+    "Studies show Sudoku can help reduce anxiety.",
+    "People who play games regularly may process info faster.",
+    "Logic puzzles train your brain to think creatively.",
+    "Word games can expand your vocabulary and focus.",
+    "The word 'palindrome' comes from Greek, meaning 'running back again.'",
+    "The odds of winning the UK Lottery jackpot are about 1 in 45 million!",
+    "Guessing numbers activates your brain’s logic and memory centers.",
+    "Body Mass Index (BMI) was invented in the 1830s by a Belgian mathematician."
+  ];
+  let lastFactIndex = 0;
+
+  // Fun fact button handler
+  const showFactBtn = document.getElementById('show-fact-btn');
+  const factText = document.getElementById('fun-fact-text');
+  if (showFactBtn && factText) {
+    showFactBtn.addEventListener('click', function () {
+      let nextIndex;
+      do {
+        nextIndex = Math.floor(Math.random() * funFacts.length);
+      } while (nextIndex === lastFactIndex && funFacts.length > 1);
+      lastFactIndex = nextIndex;
+      factText.textContent = funFacts[nextIndex];
+      factText.classList.remove('highlight');
+      void factText.offsetWidth; // trigger reflow for animation
+      factText.classList.add('highlight');
+    });
+  }
+});
+
+// --- Table Sorting (for scoreboard) ---
+document.addEventListener('DOMContentLoaded', function() {
+  const tables = document.querySelectorAll('table');
+  tables.forEach(function(table) {
+    const headers = table.querySelectorAll('th');
+    headers.forEach(function(th, colIdx) {
+      th.addEventListener('click', function() {
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const asc = th.classList.toggle('asc');
+        headers.forEach(h => h !== th && h.classList.remove('asc', 'desc'));
+        rows.sort((a, b) => {
+          let ta = a.children[colIdx].textContent.trim();
+          let tb = b.children[colIdx].textContent.trim();
+          let cmp = (!isNaN(ta) && !isNaN(tb)) ? ta - tb : ta.localeCompare(tb);
+          return asc ? cmp : -cmp;
+        });
+        rows.forEach(r => table.querySelector('tbody').appendChild(r));
+      });
+    });
   });
-}
+});
 
 // --- Contact Form: Real-time Validation and Animation ---
 const contactForm = document.getElementById('contactForm');
@@ -114,7 +155,7 @@ if (contactForm) {
   });
 }
 
-// --- Toast notification helper (can be called from anywhere) ---
+// --- Toast notification helper ---
 function showToast(message, type = "success") {
   const toast = document.getElementById('toast');
   if (!toast) return;
@@ -125,42 +166,3 @@ function showToast(message, type = "success") {
   setTimeout(() => { toast.style.display = 'none'; }, 3500);
 }
 
-// --- Optional: Table Sorting (e.g., scoreboard) ---
-document.addEventListener('DOMContentLoaded', function() {
-  const tables = document.querySelectorAll('table');
-  tables.forEach(function(table) {
-    const headers = table.querySelectorAll('th');
-    headers.forEach(function(th, colIdx) {
-      th.addEventListener('click', function() {
-        const rows = Array.from(table.querySelectorAll('tbody tr'));
-        const asc = th.classList.toggle('asc');
-        headers.forEach(h => h !== th && h.classList.remove('asc', 'desc'));
-        rows.sort((a, b) => {
-          let ta = a.children[colIdx].textContent.trim();
-          let tb = b.children[colIdx].textContent.trim();
-          let cmp = (!isNaN(ta) && !isNaN(tb)) ? ta - tb : ta.localeCompare(tb);
-          return asc ? cmp : -cmp;
-        });
-        rows.forEach(r => table.querySelector('tbody').appendChild(r));
-      });
-    });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  const funFacts = [
-    "Did you know? The Sudoku puzzle was first published in the late 1970s, but only became wildly popular after it was introduced in Japan!",
-    "The word 'palindrome' comes from Greek, meaning 'running back again.'",
-    "The odds of winning the UK Lottery jackpot are about 1 in 45 million!",
-    "Guessing numbers activates your brain’s logic and memory centers.",
-    "Body Mass Index (BMI) was invented in the 1830s by a Belgian mathematician."
-  ];
-  const funFactElem = document.getElementById('funFact');
-  const newFactBtn = document.getElementById('newFunFact');
-  if (funFactElem && newFactBtn) {
-    newFactBtn.addEventListener('click', function() {
-      let idx = Math.floor(Math.random() * funFacts.length);
-      funFactElem.textContent = funFacts[idx];
-    });
-  }
-});

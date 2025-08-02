@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2 class="card-title home-title">Welcome to MindForge</h2>
-  <p class="lead home-lead">Your digital space for logic games, reflection, and mind growth.</p>
-  <div class="home-intro">
-    <h3>About This App</h3>
-    <p>
-      MindForge lets you challenge yourself with quick games, track your thoughts, and discover trends in how you feel or think. 
-      It’s a playground for your brain, built with Python and Flask — just for you!
-    </p>
-  </div>
+<div class="home-center-container">
+  <h2>Welcome to MindForge</h2>
+  <p class="lead">Your digital space for logic games, reflection, and mind growth.</p>
+<div class="home-about">
+  <h3>About This App</h3>
+  <p>
+    MindForge lets you challenge yourself with quick games, track your thoughts, and discover trends in how you feel or think.
+    It’s a playground for your brain, built with Python and Flask — just for you!
+  </p>
+</div>
 
   <div class="home-summary-cards">
-    <div class="card summary-card">
+    <div class="card">
       <h4>Your Quick Stats</h4>
       <ul>
         <li><strong>Total Reflections:</strong> {{ total_reflections }}</li>
@@ -19,41 +20,44 @@
         <li><strong>Most Common Mood:</strong> {{ common_mood }}</li>
       </ul>
     </div>
-    <div class="card summary-card">
+    <div class="card">
       <h4>Today’s Motivation</h4>
-      <blockquote class="motivation-quote">{{ quote }}</blockquote>
+      <blockquote>{{ quote }}</blockquote>
     </div>
     {% if latest_reflection %}
-    <div class="card summary-card">
+    <div class="card">
       <h4>Latest Reflection</h4>
       <p><strong>{{ latest_reflection.timestamp }}</strong></p>
       <p>“{{ latest_reflection.notes[:120] }}{% if latest_reflection.notes|length > 120 %}...{% endif %}”</p>
       <p><em>Mood:</em> {{ latest_reflection.mood }} | <em>Tag:</em> {{ latest_reflection.tag }}</p>
-      <a href="{{ url_for('reflect') }}"><button class="btn-primary">Write New Reflection</button></a>
+      <a href="{{ url_for('reflect') }}"><button>Write New Reflection</button></a>
     </div>
     {% endif %}
   </div>
 
-  <section class="video-responsive home-video">
+  <div class="home-video-card">
     <h3>Watch: Why Logic Games Are Good For Your Brain</h3>
-    <iframe src="https://www.youtube.com/embed/4QKNArEAwEk" title="Do Brain Games Really Improve Your Brain?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-  </section>
+    <a href="https://www.youtube.com/watch?v=4QKNArEAwEk" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+      <img src="{{ url_for('static', filename='img/youtube-thumbnail.jpg') }}" alt="YouTube Video: Do Brain Games Really Improve Your Brain?" class="youtube-thumb">
+      <span class="play-btn-overlay">&#9658;</span>
+    </a>
+  </div>
 
-  <div class="home-benefits">
+  <div class="home-features">
     <h4>Why Use MindForge?</h4>
     <ul>
       <li>Sharpen your thinking with games designed to test logic and memory</li>
       <li>See your mood and progress trends visually</li>
       <li>All data stored locally — private and secure</li>
       <li>Simple, fast, and actually fun</li>
+      <li>
+        {% if session.get('name') %}
+          Welcome back, <strong>{{ session.get('name') }}</strong>! <a href="{{ url_for('logout') }}">(Not you?)</a>
+        {% else %}
+          <a href="{{ url_for('set_name') }}">Set your name</a> to personalize your experience.
+        {% endif %}
+      </li>
     </ul>
   </div>
-  <hr>
-  {% if session.get('name') %}
-    <p class="home-user"> Welcome back, <strong>{{ session.get('name') }}</strong>!
-      <a href="{{ url_for('logout') }}">(Not you?)</a>
-    </p>
-  {% else %}
-    <p class="home-user"><a href="{{ url_for('set_name') }}">Set your name</a> to personalize your experience.</p>
-  {% endif %}
+</div>
 {% endblock %}
