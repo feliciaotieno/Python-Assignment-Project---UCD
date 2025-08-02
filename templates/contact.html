@@ -1,39 +1,77 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="contact-layout">
-  <aside class="contact-aside">
-    <h3>Let's Connect</h3>
-    <ul>
-      <li>Email: <a href="mailto:your@email.com">your@email.com</a></li>
-      <li>Find more at <a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener">Brain Training (Wikipedia)</a></li>
-    </ul>
-    <div class="contact-fun-fact">
-      <strong>Did You Know?</strong>
-      <p>Regular brain training may help sharpen memory, focus, and reasoning skills. Make reflection a daily habit!</p>
+  <!-- Sticky Aside with info and quick links -->
+  <aside class="contact-aside sticky-aside">
+    <div class="contact-logo-title">
+      <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge logo" class="contact-aside-logo">
+      <h3 class="contact-aside-title">Why MindForge?</h3>
     </div>
+    <p class="contact-aside-desc">
+      A creative hub to train your mind, track your moods, and reflect on progress—all in one friendly app!
+    </p>
+    <div class="contact-funfact">
+      <h4>Did you know?</h4>
+      <p>Regular mental games can improve focus and memory. Even 5 minutes a day makes a difference!</p>
+    </div>
+    <nav class="contact-quick-links" aria-label="Quick links">
+      <strong>Quick Links:</strong>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('stats') }}">Stats</a></li>
+        <li><a href="{{ url_for('reflect') }}">Reflect</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Brain_training" target="_blank" rel="noopener">Brain Training (Wiki)</a></li>
+      </ul>
+    </nav>
+    <p class="contact-support-hours">Support Hours: Mon–Fri 10am–5pm</p>
   </aside>
+
+  <!-- Main Contact Content -->
   <section class="contact-main">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="flash-{{ category }}">{{ message }}</li>
-          {% endfor %}
+    <div class="contact-card">
+      <div class="contact-title-row">
+        <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="MindForge logo" class="contact-main-logo">
+        <h2>Contact MindForge</h2>
+      </div>
+      <div class="contact-details">
+        <p><strong>We love feedback!</strong> Please reach out with questions, suggestions, or a friendly hello.</p>
+        <p><strong>Email:</strong> <a href="mailto:your@email.com">your@email.com</a></p>
+        <p><strong>Phone:</strong> 01234 567 890</p>
+      </div>
+      <hr>
+      <blockquote class="contact-quote">
+        <span class="quote-text">“The mind is not a vessel to be filled, but a fire to be kindled.”</span>
+        <br><span class="quote-author">– Plutarch</span>
+      </blockquote>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="flash-{{ category }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+      <form method="POST" class="contact-form" autocomplete="off" novalidate>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" placeholder="Your Name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" placeholder="you@example.com" required>
+
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="4" placeholder="Type your message..." required></textarea>
+
+        <button type="submit" class="btn-cyan contact-btn">Send Message</button>
+      </form>
+      <div class="contact-faq">
+        <h3>Frequently Asked Questions</h3>
+        <ul>
+          <li><strong>Can I use MindForge on my phone?</strong> Yes! The site is fully responsive and works on all devices.</li>
+          <li><strong>Are my reflections private?</strong> All data stays local and secure—your privacy is important.</li>
+          <li><strong>How can I suggest a new feature?</strong> Use this contact form, or email us directly!</li>
         </ul>
-      {% endif %}
-    {% endwith %}
-    <h2 class="card-title">Contact Us</h2>
-    <form method="post" autocomplete="off" class="contact-form" aria-label="Contact Form">
-      <label for="name">Name:</label>
-      <input type="text" name="name" maxlength="50" required>
-      <label for="email">Email:</label>
-      <input type="email" name="email" maxlength="80" required>
-      <label for="message">Message:</label>
-      <textarea name="message" rows="4" maxlength="500" required></textarea>
-      <button type="submit" class="btn-primary">Send Message</button>
-    </form>
-    <div class="contact-quote">
-      <p>“Communication is the bridge between confusion and clarity.”</p>
+      </div>
     </div>
   </section>
 </div>

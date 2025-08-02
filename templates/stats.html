@@ -50,7 +50,7 @@
   </aside>
 
   <section class="stats-main">
-    <h2 class="card-title">📊 Reflection Stats</h2>
+    <h2 class="card-title"> Reflection Stats</h2>
     <p><strong>Total Reflections:</strong> {{ total }}</p>
     {% if request.args %}
       <p class="filtered-note"><em>Filtered results:</em> Showing {{ reflections|length }} matching reflection{{ reflections|length != 1 and 's' or '' }}.</p>
@@ -129,35 +129,44 @@
       </div>
     </div>
 
-    {% if latest %}
-      <h3>Most Recent Entry</h3>
-      <p><strong>{{ latest.timestamp }}</strong> – <em>{{ latest.mood }}</em></p>
-      <p>{{ latest.notes }}</p>
-    {% endif %}
+{% if latest %}
+  <div class="stats-highlight-card">
+    <h3 class="highlight-title">Most Recent Entry</h3>
+    <p class="stats-highlight-meta">
+      <span class="log-date">{{ latest.timestamp }}</span> –
+      <span class="mood-tag mood-{{ latest.mood|lower }}">{{ latest.mood }}</span>
+    </p>
+    <blockquote class="stats-highlight-quote">“{{ latest.notes }}”</blockquote>
+  </div>
+{% endif %}
 
-    <h3>Game Stats</h3>
-    <ul>
-      <li>Guess Attempts: {{ game_stats.guess_attempts }}</li>
-      <li>Correct Guesses: {{ game_stats.guess_wins }}</li>
-      <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
-      <li>Total Matches in Lottery: {{ game_stats.lottery_matches }}</li>
-      <li>Palindrome Checks: {{ game_stats.palindrome_checks }}</li>
-      <li>Palindrome Hits: {{ game_stats.palindrome_hits }}</li>
+<div class="stats-highlight-card">
+  <h3 class="highlight-title">Game Stats</h3>
+  <div class="game-stats-list">
+    <div><strong>Guess Attempts:</strong> {{ game_stats.guess_attempts }}</div>
+    <div><strong>Correct Guesses:</strong> {{ game_stats.guess_wins }}</div>
+    <div><strong>Lottery Plays:</strong> {{ game_stats.lottery_plays }}</div>
+    <div><strong>Total Matches in Lottery:</strong> {{ game_stats.lottery_matches }}</div>
+    <div><strong>Palindrome Checks:</strong> {{ game_stats.palindrome_checks }}</div>
+    <div><strong>Palindrome Hits:</strong> {{ game_stats.palindrome_hits }}</div>
+  </div>
+</div>
+
+<div class="stats-highlight-card reflection-log-card">
+  <h3 class="highlight-title">Reflection Log {% if request.args %}(Filtered){% endif %}</h3>
+  {% if reflections %}
+    <ul class="reflection-log-list">
+      {% for entry in reflections %}
+        <li>
+          <span class="log-date">{{ entry.timestamp }}</span>
+          <span class="mood-tag mood-{{ entry.mood|lower }}">{{ entry.mood }}</span>
+          <span class="tag-label">[{{ entry.tag }}]</span>
+          <span class="log-text">{{ entry.notes }}</span>
+        </li>
+      {% endfor %}
     </ul>
-
-    <h3>Reflection Log {% if request.args %}(Filtered){% endif %}</h3>
-    {% if reflections %}
-      <ul class="reflection-log-list">
-        {% for entry in reflections %}
-          <li>
-            <strong>{{ entry.timestamp }}</strong> – <em>{{ entry.mood }}</em> [{{ entry.tag }}]<br>
-            {{ entry.notes }}
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No reflections logged yet.</p>
-    {% endif %}
-  </section>
+  {% else %}
+    <p style="margin-top:1em;">No reflections logged yet.</p>
+  {% endif %}
 </div>
 {% endblock %}

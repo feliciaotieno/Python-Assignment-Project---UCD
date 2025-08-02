@@ -146,3 +146,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const funFacts = [
+    "Did you know? The Sudoku puzzle was first published in the late 1970s, but only became wildly popular after it was introduced in Japan!",
+    "The word 'palindrome' comes from Greek, meaning 'running back again.'",
+    "The odds of winning the UK Lottery jackpot are about 1 in 45 million!",
+    "Guessing numbers activates your brain’s logic and memory centers.",
+    "Body Mass Index (BMI) was invented in the 1830s by a Belgian mathematician."
+  ];
+  const funFactElem = document.getElementById('funFact');
+  const newFactBtn = document.getElementById('newFunFact');
+  if (funFactElem && newFactBtn) {
+    newFactBtn.addEventListener('click', function() {
+      let idx = Math.floor(Math.random() * funFacts.length);
+      funFactElem.textContent = funFacts[idx];
+    });
+  }
+});

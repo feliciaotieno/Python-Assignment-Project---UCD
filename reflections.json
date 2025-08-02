@@ -1,42 +1,92 @@
 [
   {
+    "timestamp": "2025-07-29 12:43",
     "mood": "Happy",
-    "notes": "Working",
-    "timestamp": "2025-07-29 12:43"
+    "tag": "fun",
+    "notes": "Finally finished my Python project. Feeling accomplished!"
   },
   {
+    "timestamp": "2025-07-29 12:44",
     "mood": "Frustrated",
-    "notes": "Lies, lalallaalallalala\r\n",
-    "timestamp": "2025-07-29 12:44"
+    "tag": "study",
+    "notes": "Couldn’t solve that last algorithm problem."
   },
   {
+    "timestamp": "2025-07-30 09:32",
+    "mood": "Inspired",
+    "tag": "life",
+    "notes": "Read an article about neuroplasticity. Mind blown!"
+  },
+  {
+    "timestamp": "2025-07-30 20:14",
+    "mood": "Tired",
+    "tag": "health",
+    "notes": "Slept late coding. Need to manage my energy better."
+  },
+  {
+    "timestamp": "2025-07-31 10:11",
+    "mood": "Happy",
+    "tag": "fun",
+    "notes": "Learned to use Chart.js for my Flask app."
+  },
+  {
+    "timestamp": "2025-07-31 12:17",
     "mood": "Inspired",
     "tag": "fun",
-    "notes": "I want to read more, I have decided to aim for 2 books a month",
-    "timestamp": "2025-07-31 12:17"
+    "notes": "I want to read more, I have decided to aim for 2 books a month."
   },
   {
+    "timestamp": "2025-07-31 12:18",
     "mood": "Tired",
     "tag": "study",
-    "notes": "My mind is exhausted, studying for 8 hours without breaks",
-    "timestamp": "2025-07-31 12:18"
+    "notes": "My mind is exhausted, studying for 8 hours without breaks."
   },
   {
+    "timestamp": "2025-07-31 12:21",
     "mood": "Happy",
     "tag": "fun",
-    "notes": "Testing Happy and fun",
-    "timestamp": "2025-07-31 12:21"
+    "notes": "Testing Happy and fun."
   },
   {
+    "timestamp": "2025-08-01 09:44",
     "mood": "Frustrated",
-    "notes": "This is taking too long!",
     "tag": "life",
-    "timestamp": "2025-08-01 15:01"
+    "notes": "Missed a deadline. Need to improve my time management."
   },
   {
+    "timestamp": "2025-08-01 12:01",
     "mood": "Neutral",
-    "notes": "Not too bad these Ordinary Differential Equations",
+    "tag": "health",
+    "notes": "Just an average day, nothing special."
+  },
+  {
+    "timestamp": "2025-08-01 13:09",
+    "mood": "Happy",
+    "tag": "general",
+    "notes": "Got positive feedback on my project!"
+  },
+  {
+    "timestamp": "2025-08-01 13:22",
+    "mood": "Inspired",
     "tag": "study",
-    "timestamp": "2025-08-01 15:02"
+    "notes": "Watched a TED talk on creative thinking. Motivated to try new things."
+  },
+  {
+    "timestamp": "2025-08-01 14:15",
+    "mood": "Tired",
+    "tag": "health",
+    "notes": "Long day at work. Need a nap!"
+  },
+  {
+    "timestamp": "2025-08-01 15:01",
+    "mood": "Frustrated",
+    "tag": "life",
+    "notes": "This is taking too long!"
+  },
+  {
+    "timestamp": "2025-08-01 15:02",
+    "mood": "Neutral",
+    "tag": "study",
+    "notes": "Not too bad these Ordinary Differential Equations."
   }
 ]

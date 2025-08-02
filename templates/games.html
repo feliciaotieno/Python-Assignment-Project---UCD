@@ -1,50 +1,66 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="main-games-layout">
+  <!-- Sidebar with fun facts and tips -->
+  <aside class="games-sidebar">
+    <section class="fun-facts-section">
+      <h3 class="section-light-title">Fun Fact</h3>
+      <p id="funFact" style="margin-bottom:0.9em;">
+        Did you know? The Sudoku puzzle was first published in the late 1970s, but only became wildly popular after it was introduced in Japan!
+      </p>
+      <button type="button" id="newFunFact" class="btn-cyan" style="margin-bottom:1em;">Show Another Fact</button>
+    </section>
+    <section>
+      <h4>Game Tips</h4>
+      <ul>
+        <li>Practice daily for sharper logic!</li>
+        <li>Check your stats to track progress.</li>
+        <li>Try every game at least once.</li>
+        <li>Need a break? Switch to a new game.</li>
+      </ul>
+    </section>
+    <hr>
+    <section>
+      <h4>Game Stats</h4>
+      <ul>
+        <li>Guess Attempts: {{ game_stats.guess_attempts }}</li>
+        <li>Palindrome Checks: {{ game_stats.palindrome_checks }}</li>
+        <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
+        <li>Sudoku Checks: {{ game_stats.sudoku_plays or 0 }}</li>
+      </ul>
+    </section>
+  </aside>
+
+  <!-- Main game card grid -->
   <section class="games-main">
-    <h2 class="card-title">Games Hub</h2>
-    <div class="home-sections">
-      <div class="card game-card">
+    <h2 class="page-title">Games Hub</h2>
+    <div class="games-card-grid">
+      <div class="game-card">
         <h3>Guess the Number</h3>
-        <p>Try to guess the secret number between 1 and 10.</p>
-        <a href="{{ url_for('guess_number') }}"><button class="btn-primary">Play</button></a>
+        <p>Try to guess a secret number. Get feedback on every guess—perfect for a quick brain warm-up!</p>
+        <a href="{{ url_for('guess_number') }}"><button>Play</button></a>
       </div>
-      <div class="card game-card">
+      <div class="game-card">
         <h3>Palindrome Checker</h3>
-        <p>See if a word or phrase is a palindrome.</p>
-        <a href="{{ url_for('palindrome') }}"><button class="btn-primary">Play</button></a>
+        <p>Enter a word or phrase and see if it’s a palindrome. Quick, simple, and always fun!</p>
+        <a href="{{ url_for('palindrome') }}"><button>Play</button></a>
       </div>
-      <div class="card game-card">
+      <div class="game-card">
         <h3>Lottery Game</h3>
-        <p>Pick 6 numbers and try your luck!</p>
-        <a href="{{ url_for('lottery') }}"><button class="btn-primary">Play</button></a>
+        <p>Pick 6 numbers and test your luck. How many can you match? Stats are tracked!</p>
+        <a href="{{ url_for('lottery') }}"><button>Play</button></a>
       </div>
-      <div class="card game-card">
+      <div class="game-card">
         <h3>Sudoku Checker</h3>
-        <p>Enter a completed Sudoku grid and validate it.</p>
-        <a href="{{ url_for('sudoku') }}"><button class="btn-primary">Check</button></a>
+        <p>Input a finished Sudoku board and check if your solution is correct!</p>
+        <a href="{{ url_for('sudoku') }}"><button>Play</button></a>
       </div>
-      <div class="card game-card">
+      <div class="game-card">
         <h3>BMI Calculator</h3>
-        <p>Calculate your Body Mass Index easily.</p>
-        <a href="{{ url_for('bmi') }}"><button class="btn-primary">Calculate</button></a>
+        <p>Calculate your Body Mass Index. Just for fun—see where you stand!</p>
+        <a href="{{ url_for('bmi') }}"><button>Calculate</button></a>
       </div>
     </div>
   </section>
-  <aside class="games-sidebar">
-    <h4>Game Stats</h4>
-    <ul>
-      <li>Guess Attempts: {{ game_stats.guess_attempts }}</li>
-      <li>Correct Guesses: {{ game_stats.guess_wins }}</li>
-      <li>Lottery Plays: {{ game_stats.lottery_plays }}</li>
-      <li>Total Matches: {{ game_stats.lottery_matches }}</li>
-      <li>Palindrome Checks: {{ game_stats.palindrome_checks }}</li>
-      <li>Palindrome Hits: {{ game_stats.palindrome_hits }}</li>
-      <li>Sudoku Played: {{ game_stats.sudoku_plays or 0 }}</li>
-    </ul>
-    <div class="games-tip">
-      <strong>Tip:</strong> All your plays are tracked!
-    </div>
-  </aside>
 </div>
 {% endblock %}
